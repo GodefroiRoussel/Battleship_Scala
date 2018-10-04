@@ -39,14 +39,13 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
 
             //Check if the ship is collapsing another ship or outside the board
             this.grid.checkPosition(tempShip) match {
-                case true => {
+                case true =>
                     val newGrid: Grid = this.grid.placeShip(tempShip)
                     val newListShips: List[Ship] = tempShip :: this.ships
                     val newPlayer: HumanPlayer = HumanPlayer(this.name, newListShips, newGrid)
                     val newTypeShips: List[TypeShip] = typeShips.tail
                     println(tempShip)
                     newPlayer.createShips(newTypeShips, f1, f2, f3)
-                }
                 case false =>
                     println("Your ship is not well positioned on the grid. Please try again.\n")
                     print(tempShip)
