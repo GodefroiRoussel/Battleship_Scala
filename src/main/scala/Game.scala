@@ -19,10 +19,19 @@ object Game extends App {
                         // Case Human
                         println("What will be the name of your opponent?")
                         val opponentName = StdIn.readLine()
-                        val player2WithoutShip = HumanPlayer(name)
-                        player2WithoutShip.createShips()
+                        val player2WithoutShip = HumanPlayer(opponentName)
+
+                        player2WithoutShip.createShips(
+                            Config.typeShip,
+                            player2WithoutShip,
+                            () => Helper.chooseLetter(),
+                            () => Helper.chooseNumber(),
+                            () => Helper.chooseDirection()
+                        )
                     case _ =>
+                        HumanPlayer("AI")
                         // Case AI
+                        /*
                         val level = chooseLevel()
                         level match {
                             case "1" =>
@@ -40,12 +49,17 @@ object Game extends App {
                 val namePlayer1: String = StdIn.readLine()
                 val player1WithoutShip: HumanPlayer = HumanPlayer(namePlayer1)
                 //TODO: Rec Set Ships for humans and/or AI
-                val player1: HumanPlayer = player1WithoutShip.createShips()
+                val player1: HumanPlayer = player1WithoutShip.createShips(Config.typeShip,
+                    player1WithoutShip,
+                    () => Helper.chooseLetter(),
+                    () => Helper.chooseNumber(),
+                    () => Helper.chooseDirection()
+                )
 
                 //TODO: Rec Play Turn
                 val gameState = GameState(player1, player2)
                 val winner: Player = playGame(gameState)
-                println(s"The winner is $winner.name ! Congratulations !")
+                println(s"The winner is ${winner.name} ! Congratulations !")
             case "2" =>
                 //TODO: Look how to write into a file and to play against other AI
                 println("I wrote a 2")
@@ -71,7 +85,7 @@ object Game extends App {
             "Press 2 to see AI fights.\n" +
             "Press any other key to quit the program.")
 
-        scala.io.StdIn.readLine()
+        StdIn.readLine()
     }
 
     /**
@@ -86,7 +100,7 @@ object Game extends App {
             "Press 1 to play against a human.\n" +
             "Press 2 to play against an AI.\n")
 
-        val opponent: String = scala.io.StdIn.readLine()
+        val opponent: String = StdIn.readLine()
         opponent match {
             case "1" | "2" =>
                 // Play against a Human or an AI
@@ -147,53 +161,18 @@ object Game extends App {
       */
     def playTurn(gameState: GameState): GameState = {
         println(s"It's the turn of $gameState.player1.")
-
+        /*
         // Display grids
         gameState.player1.displayGridShips(gameState.player1.grid) //Display ships and cells shot
         println("\n \n \n")
         gameState.player1.displayGridShots(gameState.player2.grid) //With the grid of the player2 we only display cells shot
-
+        */
         // User inputs for the shot
-        val letter = chooseLetter()
-        val number = chooseNumber()
+        val letter = Helper.chooseLetter()
+        val number = Helper.chooseNumber()
 
         // Shot and return the new game state after the shot
-        val cell = Cell(letter, number)
-        gameState.player1.shot(cell, gameState) // this new game state swap player 1 and player 2
+        val cell = Cell(letter, number, TypeCell.UNKNOWN)
+        gameState.player1.shot(cell, gameState) // this new game state swap player 1 and player 2 and
     }
-
-    /**
-      * Function asking to the user to enter a letter to choose which column to shoot and check if the user entered a correct parameter
-      * @return the user input
-      */
-    def chooseLetter(): String = {
-        println ("Where do you want to shoot ? You can say a letter between A and J")
-
-        val letter = StdIn.readLine().toUpperCase()
-        letter match {
-            case "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" =>
-                letter
-            case _ =>
-                println("You choosed a wrong parameter. Please try again.")
-                chooseLetter()
-        }
-    }
-
-    /**
-      * Function asking to the user to enter a number to choose which row to shoot and check if the user entered a correct parameter
-      * @return the user input
-      */
-    def chooseNumber(): String = {
-        println("Where do you want to shoot ? You can say a number between 1 and 10")
-
-        val number = StdIn.readLine()
-        number match {
-            case "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" =>
-                number
-            case _ =>
-                println("You choosed a wrong parameter. Please try again.")
-                chooseNumber()
-        }
-    }
-    */
 }
