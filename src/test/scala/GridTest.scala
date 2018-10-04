@@ -31,8 +31,8 @@ class GridTest extends FunSuite with DiagrammedAssertions {
         val grid: Grid = Grid.createGrid()
 
         val typeShip: TypeShip = Config.typeShip.head
-        val cell: Cell = Cell(2,2, TypeCell.OCCUPIED)
-        val direction: Int = 1
+        val cell: Cell = Cell(8,6, TypeCell.OCCUPIED)
+        val direction: Int = 2
 
         val ship: Ship = Ship.createShip(typeShip, cell, direction)
 

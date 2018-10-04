@@ -12,16 +12,16 @@ object Helper {
 
         val letter = StdIn.readLine().toUpperCase()
         letter match {
-            case "A" => 1
-            case "B" => 2
-            case "C" => 3
-            case "D" => 4
-            case "E" => 5
-            case "F" => 6
-            case "G" => 7
-            case "H" => 8
-            case "I" => 9
-            case "J" => 10
+            case "A" => 0
+            case "B" => 1
+            case "C" => 2
+            case "D" => 3
+            case "E" => 4
+            case "F" => 5
+            case "G" => 6
+            case "H" => 7
+            case "I" => 8
+            case "J" => 9
 
             case _ =>
                 println("You choosed a wrong parameter. Please try again.")
@@ -38,7 +38,7 @@ object Helper {
 
         val number = StdIn.readLine()
         number match {
-            case "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" =>
+            case "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" =>
                 number.toInt
             case _ =>
                 println("You choosed a wrong parameter. Please try again.")

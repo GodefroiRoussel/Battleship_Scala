@@ -21,7 +21,7 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
         // For each cell of the ship we check if the cell is outside (that means not between 1 and 10)
         // or if the type of the cell of the grid is occupied else true
         tempShip.cells.count(cell => {
-            if (cell.x <= 10 && cell.x >= 1 && cell.y <= 10 && cell.y >= 1) {
+            if (cell.x < 10 && cell.x >= 0 && cell.y < 10 && cell.y >= 0) {
                 this.cells(cell.x)(cell.y).typeCell match {
                     case TypeCell.OCCUPIED => false
                     case _ => true
@@ -66,9 +66,9 @@ object Grid {
           * @return all cells of the grid (that means a List of ( List of Cell )
           */
         def createCells(x: Int) : List[List[Cell]] = {
-            if (x>10) Nil
+            if (x>9) Nil
             else {
-                createColumn(x, 1) :: createCells(x+1)
+                createColumn(x, 0) :: createCells(x+1)
             }
         }
 
@@ -79,13 +79,13 @@ object Grid {
           * @return a column of cell initialisated : a list of cell
           */
         def createColumn(x: Int, y: Int): List[Cell] = {
-            if (y >10) Nil
+            if (y > 9) Nil
             else {
                 Cell(x,y,TypeCell.UNKNOWN) :: createColumn(x, y+1)
             }
         }
 
-        Grid(createCells(1))
+        Grid(createCells(0))
     }
 
 }
