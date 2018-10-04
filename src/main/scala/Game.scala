@@ -1,12 +1,12 @@
 import scala.io.StdIn
 
 // player1 is the current player and player2 is the opponent, it is swap at each end of turn
-//case class GameState(player1: Player, player2: Player)
+case class GameState(player1: Player, player2: Player)
 
 object Game extends App {
 
     println("Hello, you are now in the battleship application!")
-    /*
+
     main()
 
     def main() : Unit = {
@@ -44,6 +44,7 @@ object Game extends App {
                                 // TODO: Create a hard AI
                                 AIPlayer("hard")
                         }
+                        */
                 }
                 println("What will be your name?")
                 val namePlayer1: String = StdIn.readLine()
