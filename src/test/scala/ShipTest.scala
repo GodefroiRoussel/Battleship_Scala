@@ -1,8 +1,9 @@
+import Battleship._
 import org.scalatest._
 
 class ShipTest extends FunSuite with DiagrammedAssertions {
     test("Creating all ships implies also testing createListCellsFor") {
-        val typeShipList: List[TypeShip] = Config.typeShip
+        val typeShipList: List[TypeShip] = Config.TYPESHIP
 
         val cell1: Cell = Cell(2, 2,TypeCell.OCCUPIED)
         val cell2: Cell = Cell(3, 6,TypeCell.OCCUPIED)

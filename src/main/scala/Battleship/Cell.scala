@@ -1,3 +1,5 @@
+package Battleship
+
 object TypeCell extends Enumeration {
     val WATER, OCCUPIED, TOUCHED, UNKNOWN = Value
 }

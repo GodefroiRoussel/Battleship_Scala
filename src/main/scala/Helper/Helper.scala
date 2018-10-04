@@ -1,3 +1,5 @@
+package Helper
+
 import scala.io.StdIn
 
 object Helper {
@@ -13,7 +15,7 @@ object Helper {
         println ("Do you want to play to the battleship or do you want to see AI fights ?\n" +
             "Press 1 to play the game.\n" +
             "Press 2 to see AI fights.\n" +
-            "Press any other key to quit the program.")
+            "Press any other key to quit the program.\n")
 
         StdIn.readLine()
     }
@@ -37,7 +39,7 @@ object Helper {
                 opponent
             case _ =>
                 // Choose an Opponent again
-                println("You choosed a wrong parameter. Please try again.")
+                println("You choosed a wrong parameter. Please try again.\n")
                 chooseOpponent()
         }
     }
@@ -63,7 +65,7 @@ object Helper {
                 level
             case _ =>
                 // Choose an Opponent again
-                println("You choosed a wrong parameter. Please try again.")
+                println("You choosed a wrong parameter. Please try again.\n")
                 chooseLevel()
         }
     }
@@ -72,25 +74,16 @@ object Helper {
       * Function asking to the user to enter a letter to choose which column to shoot and check if the user entered a correct parameter
       * @return the user input
       */
-    def chooseLetter(): Int = {
-        println ("Where do you want to shoot ? You can say a letter between A and J")
+    def chooseLetter(s: String): Int = {
+        println(s)
+        println ("You can say a letter between A and J\n")
 
-        val letter = StdIn.readLine().toUpperCase()
+        val letter = StdIn.readLine().toUpperCase().head
         letter match {
-            case "A" => 0
-            case "B" => 1
-            case "C" => 2
-            case "D" => 3
-            case "E" => 4
-            case "F" => 5
-            case "G" => 6
-            case "H" => 7
-            case "I" => 8
-            case "J" => 9
-
+            case 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' => letter.toInt-65
             case _ =>
-                println("You choosed a wrong parameter. Please try again.")
-                chooseLetter()
+                println("You choosed a wrong parameter. Please try again.\n")
+                chooseLetter(s)
         }
     }
 
@@ -98,16 +91,17 @@ object Helper {
       * Function asking to the user to enter a number to choose which row to shoot and check if the user entered a correct parameter
       * @return the user input
       */
-    def chooseNumber(): Int = {
-        println("Where do you want to shoot ? You can say a number between 1 and 10")
+    def chooseNumber(s: String): Int = {
+        println(s)
+        println("You can say a number between 0 and 9\n")
 
         val number = StdIn.readLine()
         number match {
             case "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" =>
                 number.toInt
             case _ =>
-                println("You choosed a wrong parameter. Please try again.")
-                chooseNumber()
+                println("You choosed a wrong parameter. Please try again.\n")
+                chooseNumber(s)
         }
     }
 
@@ -116,19 +110,19 @@ object Helper {
       * @return the user input
       */
     def chooseDirection(): Int = {
-        println("Where do you want to shoot ? You can say a number between 1 and 4. " +
-            "Press 1 to position your ship toward the top." +
-            "Press 2 to position your ship toward the right." +
-            "Press 3 to position your ship toward the bottom." +
-            "Press 4 to position your ship toward the left.")
+        println("You can say a number between 1 and 4.\n" +
+            "Press 1 to position your ship toward the top.\n" +
+            "Press 2 to position your ship toward the right.\n" +
+            "Press 3 to position your ship toward the bottom.\n" +
+            "Press 4 to position your ship toward the left.\n")
 
         val number = StdIn.readLine()
         number match {
             case "1" | "2" | "3" | "4" =>
                 number.toInt
             case _ =>
-                println("You choosed a wrong parameter. Please try again.")
-                chooseNumber()
+                println("You choosed a wrong parameter. Please try again.\n")
+                chooseDirection()
         }
     }
 }

@@ -1,3 +1,5 @@
+package Battleship
+
 /*
 Coordinate System
 
@@ -55,7 +57,7 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
 
 object Grid {
     /**
-      * Function creating a Grid initialising all cells
+      * Function creating a Battleship.Grid initialising all cells
       * @return grid initialisated
       */
     def createGrid() : Grid = {

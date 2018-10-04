@@ -1,3 +1,8 @@
+package Main
+
+import Battleship._
+import Helper._
+
 import scala.io.StdIn
 
 // player1 is the current player and player2 is the opponent, it is swap at each end of turn
@@ -13,19 +18,20 @@ object Game extends App {
         val mode = Helper.chooseMode()
         mode match {
             case "1" =>
+
+                // Choose play mode
                 val opponent = Helper.chooseOpponent()
                 val player2: Player = opponent match {
                     case "1" =>
                         // Case Human
-                        println("What will be the name of your opponent?")
+                        println("What will be the name of player 2?")
                         val opponentName = StdIn.readLine()
                         val player2WithoutShip = HumanPlayer(opponentName)
 
                         player2WithoutShip.createShips(
-                            Config.typeShip,
-                            player2WithoutShip,
-                            () => Helper.chooseLetter(),
-                            () => Helper.chooseNumber(),
+                            Config.TYPESHIP,
+                            () => Helper.chooseLetter(Config.TEXT_POSITIONING_SHIP),
+                            () => Helper.chooseNumber(Config.TEXT_POSITIONING_SHIP),
                             () => Helper.chooseDirection()
                         )
                     case _ =>
@@ -46,14 +52,15 @@ object Game extends App {
                         }
                         */
                 }
-                println("What will be your name?")
+
+                // Enter player 1 name
+                println("What will be the name of player 1?")
                 val namePlayer1: String = StdIn.readLine()
                 val player1WithoutShip: HumanPlayer = HumanPlayer(namePlayer1)
-                //TODO: Rec Set Ships for humans and/or AI
-                val player1: HumanPlayer = player1WithoutShip.createShips(Config.typeShip,
-                    player1WithoutShip,
-                    () => Helper.chooseLetter(),
-                    () => Helper.chooseNumber(),
+
+                val player1: HumanPlayer = player1WithoutShip.createShips(Config.TYPESHIP,
+                    () => Helper.chooseLetter(Config.TEXT_POSITIONING_SHIP),
+                    () => Helper.chooseNumber(Config.TEXT_POSITIONING_SHIP),
                     () => Helper.chooseDirection()
                 )
 
@@ -103,8 +110,8 @@ object Game extends App {
         gameState.player1.displayGridShots(gameState.player2.grid) //With the grid of the player2 we only display cells shot
         */
         // User inputs for the shot
-        val letter = Helper.chooseLetter()
-        val number = Helper.chooseNumber()
+        val letter = Helper.chooseLetter(Config.TEXT_SHOOT)
+        val number = Helper.chooseNumber(Config.TEXT_SHOOT)
 
         // Shot and return the new game state after the shot
         val cell = Cell(letter, number, TypeCell.UNKNOWN)

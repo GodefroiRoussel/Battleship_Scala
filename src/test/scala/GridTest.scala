@@ -1,3 +1,5 @@
+import Battleship._
+
 import org.scalatest._
 
 class GridTest extends FunSuite with DiagrammedAssertions {
@@ -18,7 +20,7 @@ class GridTest extends FunSuite with DiagrammedAssertions {
     test("Check good cells of a ship"){
         val grid: Grid = Grid.createGrid()
 
-        val typeShip: TypeShip = Config.typeShip.head
+        val typeShip: TypeShip = Config.TYPESHIP.head
         val cell: Cell = Cell(2,2, TypeCell.OCCUPIED)
         val direction: Int = 2
 
@@ -30,7 +32,7 @@ class GridTest extends FunSuite with DiagrammedAssertions {
     test("Check bad cells of a ship"){
         val grid: Grid = Grid.createGrid()
 
-        val typeShip: TypeShip = Config.typeShip.head
+        val typeShip: TypeShip = Config.TYPESHIP.head
         val cell: Cell = Cell(8,6, TypeCell.OCCUPIED)
         val direction: Int = 2
 
@@ -42,7 +44,7 @@ class GridTest extends FunSuite with DiagrammedAssertions {
     test("Place Ship on the grid"){
         val grid: Grid = Grid.createGrid()
 
-        val typeShip: TypeShip = Config.typeShip.head
+        val typeShip: TypeShip = Config.TYPESHIP.head
         val cell: Cell = Cell(2,2, TypeCell.OCCUPIED)
         val direction: Int = 2
 
@@ -59,7 +61,7 @@ class GridTest extends FunSuite with DiagrammedAssertions {
     test("Check ship collapsing another ship exactly on the same cells"){
         val grid: Grid = Grid.createGrid()
 
-        val typeShip: TypeShip = Config.typeShip.head
+        val typeShip: TypeShip = Config.TYPESHIP.head
         val cell: Cell = Cell(2,2, TypeCell.OCCUPIED)
         val direction: Int = 2
 
@@ -74,7 +76,7 @@ class GridTest extends FunSuite with DiagrammedAssertions {
     test("Check ship collapsing another ship on one cell"){
         val grid: Grid = Grid.createGrid()
 
-        val typeShip: TypeShip = Config.typeShip.head
+        val typeShip: TypeShip = Config.TYPESHIP.head
         val cell1: Cell = Cell(2,2, TypeCell.OCCUPIED)
         val right: Int = 2
         val ship: Ship = Ship.createShip(typeShip, cell1, right)
@@ -90,7 +92,7 @@ class GridTest extends FunSuite with DiagrammedAssertions {
     test("Check ship near to another ship of one cell"){
         val grid: Grid = Grid.createGrid()
 
-        val typeShip: TypeShip = Config.typeShip.head
+        val typeShip: TypeShip = Config.TYPESHIP.head
         val cell1: Cell = Cell(2,2, TypeCell.OCCUPIED)
         val right: Int = 2
         val ship: Ship = Ship.createShip(typeShip, cell1, right)

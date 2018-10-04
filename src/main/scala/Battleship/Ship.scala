@@ -1,3 +1,5 @@
+package Battleship
+
 import scala.annotation.tailrec
 
 case class TypeShip(name: String, size: Int){}
