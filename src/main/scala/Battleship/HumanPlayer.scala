@@ -10,7 +10,7 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
       */
     override def isAlive: Boolean = {
         val numberLifePoint: Int = ships.map(_.typeShip.size).sum
-        this.grid.cells.flatten.count(cell => cell.typeCell == TypeCell.TOUCHED) == numberLifePoint
+        this.grid.cells.flatten.count(cell => cell.typeCell == TypeCell.TOUCHED) != numberLifePoint
     }
 
     /**
