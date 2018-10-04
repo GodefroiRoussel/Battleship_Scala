@@ -6,11 +6,11 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
 
     /**
       * Function to know if a player isAlive
-      * @return false if the player has no more ship alive, else true
+      * @return false if the player has no more ship alive that means the sum of all size of ships are equal to the number of touched cell in the grid
       */
     override def isAlive: Boolean = {
-        // TODO: Implement
-        true
+        val numberLifePoint: Int = ships.map(_.typeShip.size).sum
+        this.grid.cells.flatten.count(cell => cell.typeCell == TypeCell.TOUCHED) == numberLifePoint
     }
 
     /**
