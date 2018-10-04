@@ -18,7 +18,8 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
       * @return true if the ship has good positions, otherwise false
       */
     def checkPosition(tempShip: Ship): Boolean = {
-        // pour toutes les positions du bateau voir si en dehors ou une case en occupied
+        // For each cell of the ship we check if the cell is outside (that means not between 1 and 10)
+        // or if the type of the cell of the grid is occupied else true
         tempShip.cells.count(cell => {
             if (cell.x <= 10 && cell.x >= 1 && cell.y <= 10 && cell.y >= 1) {
                 this.cells(cell.x)(cell.y).typeCell match {
@@ -65,9 +66,9 @@ object Grid {
           * @return all cells of the grid (that means a List of ( List of Cell )
           */
         def createCells(x: Int) : List[List[Cell]] = {
-            if (x>=10) Nil
+            if (x>10) Nil
             else {
-                createColumn(x, 0) :: createCells(x+1)
+                createColumn(x, 1) :: createCells(x+1)
             }
         }
 
@@ -78,13 +79,13 @@ object Grid {
           * @return a column of cell initialisated : a list of cell
           */
         def createColumn(x: Int, y: Int): List[Cell] = {
-            if (y >=10) Nil
+            if (y >10) Nil
             else {
                 Cell(x,y,TypeCell.UNKNOWN) :: createColumn(x, y+1)
             }
         }
 
-        Grid(createCells(0))
+        Grid(createCells(1))
     }
 
 }

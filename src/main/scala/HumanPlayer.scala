@@ -2,7 +2,7 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
 
     /**
       * Function to know if a player isAlive
-      * @return a false if the player has no more ship, else true
+      * @return false if the player has no more ship alive, else true
       */
     override def isAlive: Boolean = {
         // TODO: Implement
