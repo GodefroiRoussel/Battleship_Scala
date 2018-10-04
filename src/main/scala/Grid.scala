@@ -51,8 +51,6 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
 
 
 }
-// For update a value
-// val newGrid: Grid = Grid(grid.cells.updated(0, grid.cells(0) ++ col))
 
 object Grid {
     /**
