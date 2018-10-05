@@ -8,7 +8,7 @@ class ShipTest extends FunSuite with DiagrammedAssertions {
         val cell1: Cell = Cell(2, 2,TypeCell.OCCUPIED)
         val cell2: Cell = Cell(3, 6,TypeCell.OCCUPIED)
         val cell3: Cell = Cell(7, 7,TypeCell.OCCUPIED)
-        val cell4: Cell = Cell(10, 4,TypeCell.OCCUPIED)
+        val cell4: Cell = Cell(9, 4,TypeCell.OCCUPIED)
         val cell5: Cell = Cell(6, 9,TypeCell.OCCUPIED)
 
         val top: Int = 1 //That means going to the top
@@ -42,9 +42,9 @@ class ShipTest extends FunSuite with DiagrammedAssertions {
 
         val listCellsShip4: List[Cell] =
             List(
-                Cell(10,4,TypeCell.OCCUPIED),
                 Cell(9,4,TypeCell.OCCUPIED),
-                Cell(8,4,TypeCell.OCCUPIED)
+                Cell(8,4,TypeCell.OCCUPIED),
+                Cell(7,4,TypeCell.OCCUPIED)
             )
 
         val listCellsShip5: List[Cell] =
@@ -66,7 +66,7 @@ class ShipTest extends FunSuite with DiagrammedAssertions {
         assert(ship5.typeShip == typeShipList(4) && ship5.cells == listCellsShip5)
     }
 
-    test("Test a shot on a ship"){
+    test("A hit on a ship"){
         val typeShip: TypeShip = Config.TYPESHIP.head
         val cell: Cell = Cell(2,2, TypeCell.OCCUPIED)
         val right: Int = 2
@@ -83,5 +83,34 @@ class ShipTest extends FunSuite with DiagrammedAssertions {
         val shipHitted: Ship = ship.hit(cell)
         val shipTest: Ship = Ship(typeShip, listCell)
         assert(shipTest == shipHitted)
+    }
+
+    test("Count the number of touched cell in a ship"){
+        val typeShip: TypeShip = Config.TYPESHIP.head
+        val listCell: List[Cell] = List(
+            Cell(2,2,TypeCell.TOUCHED),
+            Cell(3,2,TypeCell.TOUCHED),
+            Cell(4,2,TypeCell.TOUCHED),
+            Cell(5,2,TypeCell.TOUCHED),
+            Cell(6,2,TypeCell.OCCUPIED)
+        )
+        val ship: Ship = Ship(typeShip, listCell)
+        assert(ship.numberCellsTouched()==4)
+    }
+
+    test("A ship is not sunk then a ship is sunk"){
+        val typeShip: TypeShip = Config.TYPESHIP.head
+        val listCell: List[Cell] = List(
+            Cell(2,2,TypeCell.TOUCHED),
+            Cell(3,2,TypeCell.TOUCHED),
+            Cell(4,2,TypeCell.TOUCHED),
+            Cell(5,2,TypeCell.TOUCHED),
+            Cell(6,2,TypeCell.OCCUPIED)
+        )
+        val ship: Ship = Ship(typeShip, listCell)
+        assert(!ship.isSunk())
+
+        val shipHitted: Ship = ship.hit(Cell(6,2,TypeCell.OCCUPIED))
+        assert(shipHitted.isSunk())
     }
 }

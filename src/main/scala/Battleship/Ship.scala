@@ -18,12 +18,21 @@ case class Ship(typeShip: TypeShip, cells: List[Cell]) {
     }
 
     /**
+      * Function that count the number of cells of type TOUCHED
+      * @return the number of TOUCHED cells
+      */
+    def numberCellsTouched(): Int = {
+        this.cells.count(cell => cell.typeCell == TypeCell.TOUCHED)
+    }
+
+    /**
       * Function that says if a ship is sunk or not
       * @return true if the number of cells TOUCHED of the ship is equal to the size of the type ship
       */
     def isSunk(): Boolean = {
-        this.cells.count(cell => cell.typeCell == TypeCell.TOUCHED) == this.typeShip.size
+         this.numberCellsTouched() == this.typeShip.size
     }
+
 }
 
 
