@@ -68,8 +68,61 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
         }
     }
 
+    //TODO: TO REFACTOR WITH A HIGH ORDER FUNCTION
 
+    def displayGridShips(): Unit = {
+        def displayCellGridShip(cell: Cell): Unit = {
+            cell.typeCell match {
+                case TypeCell.WATER => print(Console.BLUE+"□ "+Console.RESET)
+                case TypeCell.TOUCHED => print(Console.RED+"● "+Console.RESET)
+                case TypeCell.UNKNOWN => print(Console.BLACK +"□ "+Console.RESET)
+                case TypeCell.OCCUPIED => print(Console.WHITE+"● "+Console.RESET)
+            }
+        }
 
+        def displayGridShipsTR(x: Int, y: Int): Unit = {
+            if(x == 0) print(y+" ")
+
+            if (x < 10) {
+                displayCellGridShip(this.cells(x)(y))
+                displayGridShipsTR(x+1, y)
+            }
+            else if (y < 9) {
+                println()
+                displayGridShipsTR(0, y+1)
+            }
+        }
+
+        println("  A B C D E F G H I J")
+        displayGridShipsTR(0, 0)
+        println()
+    }
+
+    def displayGridShots(): Unit = {
+        def displayCellGridShot(cell: Cell): Unit = {
+            cell.typeCell match {
+                case TypeCell.WATER => print(Console.BLUE+"□ "+Console.RESET)
+                case TypeCell.TOUCHED => print(Console.RED+"● "+Console.RESET)
+                case TypeCell.UNKNOWN | TypeCell.OCCUPIED => print(Console.BLACK +"□ "+Console.RESET)
+            }
+        }
+
+        def displayGridShipsTR(x: Int, y: Int): Unit = {
+            if(x == 0) print(y+" ")
+
+            if (x < 10) {
+                displayCellGridShot(this.cells(x)(y))
+                displayGridShipsTR(x+1, y)
+            }
+            else if (y < 9) {
+                println()
+                displayGridShipsTR(0, y+1)
+            }
+        }
+        println("  A B C D E F G H I J")
+        displayGridShipsTR(0, 0)
+        println()
+    }
 
 }
 

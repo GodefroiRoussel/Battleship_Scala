@@ -52,7 +52,6 @@ object Game extends App {
                         }
                         */
                 }
-
                 // Enter player 1 name
                 println("What will be the name of player 1?")
                 val namePlayer1: String = StdIn.readLine()
@@ -102,13 +101,16 @@ object Game extends App {
       * @return the new game state at the end of the turn (after the shot)
       */
     def playTurn(gameState: GameState): GameState = {
-        println(s"It's the turn of $gameState.player1.")
-        /*
+        println(s"It's the turn of ${gameState.player1.name}.")
+
         // Display grids
-        gameState.player1.displayGridShips(gameState.player1.grid) //Display ships and cells shot
-        println("\n \n \n")
-        gameState.player1.displayGridShots(gameState.player2.grid) //With the grid of the player2 we only display cells shot
-        */
+        println("Your grid")
+        gameState.player1.grid.displayGridShips() //Display ships and cells shot
+        println("\n \n")
+        println("Grid of your shots")
+        gameState.player2.grid.displayGridShots() //With the grid of the player2 we only display cells shot
+
+
         // User inputs for the shot
         val letter = Helper.chooseLetter(Config.TEXT_SHOOT)
         val number = Helper.chooseNumber(Config.TEXT_SHOOT)
