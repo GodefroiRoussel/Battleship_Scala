@@ -60,4 +60,12 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
     override def copy(name: String, ships: List[Ship], grid: Grid): HumanPlayer = {
         HumanPlayer(name, ships, grid)
     }
+
+    override def copyShips(newShips: List[Ship]): Player = {
+        HumanPlayer(this.name, ships = newShips, this.grid)
+    }
+
+    override def copyShipsAndGrid(ships: List[Ship], grid: Grid): Player = {
+        HumanPlayer(this.name, ships, grid)
+    }
 }
