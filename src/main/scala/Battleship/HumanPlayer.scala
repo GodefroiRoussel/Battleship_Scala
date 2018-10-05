@@ -51,6 +51,14 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
         GameState(newPlayer2, gameState.player1)
     }
 
+    /**
+      * Function creating ships for a player. The recursion ends when the typeShips parameter is empty.
+      * @param typeShips: List[TypeShip]: The list of type ship to create
+      * @param f1: function for choosing the letter
+      * @param f2: function for choosing the number
+      * @param f3: function for choosing the direction
+      * @return a player with all his ships positioned on the grid
+      */
     override def createShips(typeShips: List[TypeShip], f1:() => Int, f2:() => Int, f3:() => Int): HumanPlayer = {
         if (typeShips.isEmpty) {
             HumanPlayer(this.name, this.ships, this.grid)
@@ -80,14 +88,21 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
         }
     }
 
-    override def copy(name: String, ships: List[Ship], grid: Grid): HumanPlayer = {
-        HumanPlayer(name, ships, grid)
-    }
-
+    /**
+      * Function that copy a Human player by updating his ships
+      * @param newShips: List[Ship]: List of ships that has to be updated
+      * @return a new player with his ships updated
+      */
     override def copyShips(newShips: List[Ship]): Player = {
         HumanPlayer(this.name, ships = newShips, this.grid)
     }
 
+    /**
+      * Function that copy a Human player by updating his ships and his grid
+      * @param ships: List[Ship]: List of ships that has to be updated
+      * @param grid: Grid: Grid that has to be updated
+      * @return a new player with his ships and his grid updated
+      */
     override def copyShipsAndGrid(ships: List[Ship], grid: Grid): Player = {
         HumanPlayer(this.name, ships, grid)
     }
