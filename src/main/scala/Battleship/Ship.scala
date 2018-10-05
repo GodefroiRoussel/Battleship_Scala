@@ -6,6 +6,24 @@ case class TypeShip(name: String, size: Int){}
 
 case class Ship(typeShip: TypeShip, cells: List[Cell]) {
 
+    /**
+      * Function that mark a cell of the ship as TOUCHED
+      * @param cell: Cell: the cell to mark
+      * @return the ship updated with the cell marked as TOUCHED
+      */
+    def hit(cell: Cell): Ship = {
+        val index: Int = this.cells.indexWhere(cellBoat => cell.x == cellBoat.x && cell.y == cellBoat.y)
+        val newCells: List[Cell] = this.cells.updated(index, cell.copy(typeCell = TypeCell.TOUCHED))
+        this.copy(cells = newCells)
+    }
+
+    /**
+      * Function that says if a ship is sunk or not
+      * @return true if the number of cells TOUCHED of the ship is equal to the size of the type ship
+      */
+    def isSunk(): Boolean = {
+        this.cells.count(cell => cell.typeCell == TypeCell.TOUCHED) == this.typeShip.size
+    }
 }
 
 

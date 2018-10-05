@@ -65,4 +65,23 @@ class ShipTest extends FunSuite with DiagrammedAssertions {
         assert(ship4.typeShip == typeShipList(3) && ship4.cells == listCellsShip4)
         assert(ship5.typeShip == typeShipList(4) && ship5.cells == listCellsShip5)
     }
+
+    test("Test a shot on a ship"){
+        val typeShip: TypeShip = Config.TYPESHIP.head
+        val cell: Cell = Cell(2,2, TypeCell.OCCUPIED)
+        val right: Int = 2
+        val ship: Ship = Ship.createShip(typeShip, cell, right)
+
+        val listCell: List[Cell] = List(
+            Cell(2,2,TypeCell.TOUCHED),
+            Cell(3,2,TypeCell.OCCUPIED),
+            Cell(4,2,TypeCell.OCCUPIED),
+            Cell(5,2,TypeCell.OCCUPIED),
+            Cell(6,2,TypeCell.OCCUPIED)
+        )
+
+        val shipHitted: Ship = ship.hit(cell)
+        val shipTest: Ship = Ship(typeShip, listCell)
+        assert(shipTest == shipHitted)
+    }
 }

@@ -14,16 +14,40 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
     }
 
     /**
-      * Function that shoot on a cell of the opponent
+      * Function that shoot on a cell of the opponent (that means marked the cell shot on the grid and if needed on its list of ships)
       * @param cell : Cell: cell to shoot
       * @param gameState: GameState: State of the game
       * @return a new game state where grid and player state updated
       */
     override def shot(cell: Cell, gameState: GameState): GameState = {
-        // Check shot and update the grid according to the shot
-        val newGridPlayer2 = gameState.player2.grid.shot(cell)
+        // Check shot and then update the ship hitted
+        val resultShot: TypeCell.Value = gameState.player2.grid.checkCell(cell)
+
+        // If the cell targeted is OCCUPIED or TOUCHED then we mark the cell has TOUCHED on the ship
+        val newShips: List[Ship] = resultShot match {
+            case TypeCell.OCCUPIED | TypeCell.TOUCHED =>
+                gameState.player2.ships.map(ship => {
+                    // Check if contains in the ship the cell with the type OCCUPIED or TOUCHED and then hit else return the ship
+                    if(ship.cells.contains(cell.copy(typeCell = TypeCell.OCCUPIED)) || ship.cells.contains(cell.copy(typeCell = TypeCell.TOUCHED))) {
+                        val tempShip: Ship = ship.hit(cell)
+                        println("You hitted a ship !\n")
+                        if(tempShip.isSunk()){
+                            println(s"Well done ! The ${tempShip.typeShip.name} is sunk.\n")
+                        }
+                        tempShip
+                    } else ship
+                })
+            case _ =>
+                println("Plouf ! You missed your shot\n")
+                gameState.player2.ships
+        }
+
+        val player2AfterFirstShot: Player = gameState.player2.copyShips(ships = newShips)
+        //Update the grid according to the shot on the grid
+        val newGridPlayer2 = player2AfterFirstShot.grid.shot(cell)
+
         // Update the player shooted
-        val newPlayer2 = gameState.player2.copy(gameState.player2.name, gameState.player2.ships, newGridPlayer2)
+        val newPlayer2: Player = player2AfterFirstShot.copyShipsAndGrid(player2AfterFirstShot.ships, newGridPlayer2)
         GameState(newPlayer2, gameState.player1)
     }
 
@@ -47,7 +71,6 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
                     val newListShips: List[Ship] = tempShip :: this.ships
                     val newPlayer: HumanPlayer = HumanPlayer(this.name, newListShips, newGrid)
                     val newTypeShips: List[TypeShip] = typeShips.tail
-                    println(tempShip)
                     newPlayer.createShips(newTypeShips, f1, f2, f3)
                 case false =>
                     println("Your ship is not well positioned on the grid. Please try again.\n")

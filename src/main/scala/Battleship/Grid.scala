@@ -68,6 +68,15 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
         }
     }
 
+    /**
+      * Function returning the type of the cell of the grid
+      * @param cell: Cell: the cell to retrieve the type on the grid
+      * @return the type of the cell on the grid
+      */
+    def checkCell(cell: Cell): TypeCell.Value = {
+        this.cells(cell.x)(cell.y).typeCell
+    }
+
     //TODO: TO REFACTOR WITH A HIGH ORDER FUNCTION
 
     /**
@@ -182,9 +191,6 @@ object Grid {
                 Cell(x,y,TypeCell.UNKNOWN) :: createColumn(x, y+1)
             }
         }
-
         Grid(createCells(0))
     }
-
 }
-
