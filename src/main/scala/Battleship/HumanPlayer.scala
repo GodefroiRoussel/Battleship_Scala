@@ -20,8 +20,11 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
       * @return a new game state where grid and player state updated
       */
     override def shot(cell: Cell, gameState: GameState): GameState = {
-        // TODO: IMPLEMENT
-        GameState(gameState.player1, gameState.player2)
+        // Check shot and update the grid according to the shot
+        val newGridPlayer2 = gameState.player2.grid.shot(cell)
+        // Update the player shooted
+        val newPlayer2 = gameState.player2.copy(gameState.player2.name, gameState.player2.ships, newGridPlayer2)
+        GameState(newPlayer2, gameState.player1)
     }
 
     override def createShips(typeShips: List[TypeShip], f1:() => Int, f2:() => Int, f3:() => Int): HumanPlayer = {
@@ -52,5 +55,9 @@ case class HumanPlayer(name: String, ships: List[Ship] = List(), grid: Grid = Gr
                     this.createShips(typeShips, f1, f2, f3)
             }
         }
+    }
+
+    override def copy(name: String, ships: List[Ship], grid: Grid): HumanPlayer = {
+        HumanPlayer(name, ships, grid)
     }
 }

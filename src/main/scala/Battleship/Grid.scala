@@ -51,6 +51,24 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
 
     }
 
+    /**
+      * Function updating the grid by marking the cell shot
+      * @param cell: Cell: the cell that the player wants to shoot
+      * @return the new grid with the cell updated according to each case
+      */
+    def shot(cell: Cell): Grid = {
+        this.cells(cell.x)(cell.y).typeCell match {
+            case TypeCell.TOUCHED => this
+            case TypeCell.OCCUPIED =>
+                val newCell = Cell(cell.x, cell.y, TypeCell.TOUCHED)
+                Grid(this.cells.updated(cell.x, this.cells(cell.x).updated(cell.y, newCell)))
+            case TypeCell.UNKNOWN =>
+                val newCell = Cell(cell.x, cell.y, TypeCell.WATER)
+                Grid(this.cells.updated(cell.x, this.cells(cell.x).updated(cell.y, newCell)))
+        }
+    }
+
+
 
 
 }

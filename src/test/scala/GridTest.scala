@@ -51,7 +51,7 @@ class GridTest extends FunSuite with DiagrammedAssertions {
         val ship: Ship = Ship.createShip(typeShip, cell, direction)
         val newGrid: Grid = grid.placeShip(ship)
 
-        val listOfOccupiedCells: List[Cell] = newGrid.cells.flatMap(cell => cell).filter(cell => {
+        val listOfOccupiedCells: List[Cell] = newGrid.cells.flatten.filter(cell => {
             cell.typeCell == TypeCell.OCCUPIED
         })
 
@@ -103,5 +103,23 @@ class GridTest extends FunSuite with DiagrammedAssertions {
         val ship2: Ship = Ship.createShip(typeShip, cell2, top)
 
         assert(newGrid.checkPosition(ship2))
+    }
+
+    test("Shots on the grid") {
+        val grid: Grid = Grid.createGrid()
+
+        val typeShip: TypeShip = Config.TYPESHIP.head
+        val cell1: Cell = Cell(2,2, TypeCell.OCCUPIED)
+        val right: Int = 2
+        val ship: Ship = Ship.createShip(typeShip, cell1, right)
+        val newGrid: Grid = grid.placeShip(ship)
+
+        val shot1: Cell = Cell(2,2, TypeCell.UNKNOWN)
+        val gridAfterFirstShot: Grid = newGrid.shot(shot1)
+        assert(gridAfterFirstShot.cells.flatten.count(cell => cell.typeCell == TypeCell.TOUCHED) == 1)
+
+        val shot2: Cell = Cell(5,5, TypeCell.UNKNOWN)
+        val gridAfterSecondShot: Grid = gridAfterFirstShot.shot(shot2)
+        assert(gridAfterSecondShot.cells.flatten.count(cell => cell.typeCell == TypeCell.WATER) == 1)
     }
 }
