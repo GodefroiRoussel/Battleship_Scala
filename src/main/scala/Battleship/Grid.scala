@@ -65,6 +65,7 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
             case TypeCell.UNKNOWN =>
                 val newCell = Cell(cell.x, cell.y, TypeCell.WATER)
                 Grid(this.cells.updated(cell.x, this.cells(cell.x).updated(cell.y, newCell)))
+            case TypeCell.WATER => this
         }
     }
 
