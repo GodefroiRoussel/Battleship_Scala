@@ -70,16 +70,29 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
 
     //TODO: TO REFACTOR WITH A HIGH ORDER FUNCTION
 
+    /**
+      * Function that display the grid with ships and shots
+      */
     def displayGridShips(): Unit = {
+
+        /**
+          * Function that display a cell with the right caractere according to the type of the cell
+          * @param cell: Cell: the cell to display
+          */
         def displayCellGridShip(cell: Cell): Unit = {
             cell.typeCell match {
                 case TypeCell.WATER => print(Console.BLUE+"□ "+Console.RESET)
                 case TypeCell.TOUCHED => print(Console.RED+"● "+Console.RESET)
                 case TypeCell.UNKNOWN => print(Console.BLACK +"□ "+Console.RESET)
-                case TypeCell.OCCUPIED => print(Console.WHITE+"● "+Console.RESET)
+                case TypeCell.OCCUPIED => print(Console.WHITE+"ο "+Console.RESET)
             }
         }
 
+        /**
+          * Function that display the grid with ships and shots of the opponent on your grid for
+          * @param x: Int: Number of the row
+          * @param y: Int; Number of the column
+          */
         def displayGridShipsTR(x: Int, y: Int): Unit = {
             if(x == 0) print(y+" ")
 
@@ -98,7 +111,14 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
         println()
     }
 
+    /**
+      * Function that display the grid with ships and shots
+      */
     def displayGridShots(): Unit = {
+        /**
+          * Function that display a cell with the right caractere according to the type of the cell
+          * @param cell: Cell: the cell to display
+          */
         def displayCellGridShot(cell: Cell): Unit = {
             cell.typeCell match {
                 case TypeCell.WATER => print(Console.BLUE+"□ "+Console.RESET)
@@ -107,6 +127,11 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
             }
         }
 
+        /**
+          * Function that display the grid with shots that you did
+          * @param x: Int: Number of the row
+          * @param y: Int; Number of the column
+          */
         def displayGridShipsTR(x: Int, y: Int): Unit = {
             if(x == 0) print(y+" ")
 

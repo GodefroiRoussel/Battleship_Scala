@@ -104,10 +104,10 @@ object Game extends App {
         println(s"It's the turn of ${gameState.player1.name}.")
 
         // Display grids
-        println("Your grid")
+        println("    Your grid\n")
         gameState.player1.grid.displayGridShips() //Display ships and cells shot
-        println("\n \n")
-        println("Grid of your shots")
+        println()
+        println("    Grid of your shots\n")
         gameState.player2.grid.displayGridShots() //With the grid of the player2 we only display cells shot
 
 
