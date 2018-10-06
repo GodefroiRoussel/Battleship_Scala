@@ -78,12 +78,18 @@ object Helper {
         println(s)
         println ("You can say a letter between A and J\n")
 
-        val letter = StdIn.readLine().toUpperCase().head
-        letter match {
-            case 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' => letter.toInt-65
-            case _ =>
-                println("You choosed a wrong parameter. Please try again.\n")
-                chooseLetter(s)
+        val input = StdIn.readLine().toUpperCase()
+        if(input.isEmpty) {
+            println("You choosed a wrong parameter. Please try again.\n")
+            chooseLetter(s)
+        } else {
+            val letter: Char = input.head
+            letter match {
+                case 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' => letter.toInt-65
+                case _ =>
+                    println("You choosed a wrong parameter. Please try again.\n")
+                    chooseLetter(s)
+            }
         }
     }
 
