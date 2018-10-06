@@ -19,6 +19,14 @@ trait Player {
         this.grid.cells.flatten.count(cell => cell.typeCell == TypeCell.TOUCHED) != numberLifePoint
     }
 
+    /**
+      * Function creating ships for a player. The recursion ends when the typeShips parameter is empty.
+      * @param typeShips: List[TypeShip]: The list of type ship to create
+      * @param f1: function for choosing the letter (it can be either an input or a random)
+      * @param f2: function for choosing the number (it can be either an input or a random)
+      * @param f3: function for choosing the direction (it can be either an input or a random)
+      * @return a player with all his ships positioned on the grid
+      */
     def createShips(typeShips: List[TypeShip], f1:() => Int, f2:() => Int, f3:() => Int): Player
 
     /**
@@ -58,8 +66,31 @@ trait Player {
         val newPlayer2: Player = player2AfterFirstShot.copyShipsAndGrid(player2AfterFirstShot.ships, newGridPlayer2)
         GameState(newPlayer2, gameState.player1)
     }
+
+    /**
+      * Function that copy a player by updating his ships
+      * @param newShips: List[Ship]: List of ships that has to be updated
+      * @return a new player with his ships updated
+      */
     def copyShips(ships: List[Ship]): Player
+
+    /**
+      * Function that copy a player by updating his ships and his grid
+      * @param ships: List[Ship]: List of ships that has to be updated
+      * @param grid: Grid: Grid that has to be updated
+      * @return a new player with his ships and his grid updated
+      */
     def copyShipsAndGrid(ships: List[Ship], grid: Grid): Player
+
+    /**
+      * Function that update information of the player (ships and name)
+      * @return the player updated with new ships and new name
+      */
     def updateInformation(): Player
+
+    /**
+      * Function that get info for shot (it can be either an input or a random or any other method)
+      * @return the cell to shoot
+      */
     def getInfoForShot(): Cell
 }
