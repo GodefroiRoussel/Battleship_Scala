@@ -3,72 +3,61 @@ package Main
 import Battleship._
 import Helper._
 
+import scala.util.Random
 import scala.io.StdIn
 
-// player1 is the current player and player2 is the opponent, it is swap at each end of turn
+// player1 is the current player and player2 is the opponent, it is swapped at each end of turn
 case class GameState(player1: Player, player2: Player)
 
 object Game extends App {
 
+    val r = new Random
     println("Hello, you are now in the battleship application!")
 
-    main()
+    main(r)
 
-    def main() : Unit = {
+    /**
+      * Function containing the body of our application.
+      * We choose the mode needed then we play the mode (i.e. player vs player, player vs AI or AI vs AI)
+      * @param r: Random
+      */
+    def main(r: Random) : Unit = {
         val mode = Helper.chooseMode()
         mode match {
             case "1" =>
+                val player1Empty: Player = HumanPlayer("1")
 
                 // Choose play mode
                 val opponent = Helper.chooseOpponent()
-                val player2: Player = opponent match {
+                val player2Empty: Player = opponent match {
                     case "1" =>
                         // Case Human
-                        println("What will be the name of player 2?")
-                        val opponentName = StdIn.readLine()
-                        val player2WithoutShip = HumanPlayer(opponentName)
-
-                        player2WithoutShip.createShips(
-                            Config.TYPESHIP,
-                            () => Helper.chooseLetter(Config.TEXT_POSITIONING_SHIP),
-                            () => Helper.chooseNumber(Config.TEXT_POSITIONING_SHIP),
-                            () => Helper.chooseDirection()
-                        )
+                        HumanPlayer("2")
                     case _ =>
-                        HumanPlayer("AI")
                         // Case AI
-                        /*
-                        val level = chooseLevel()
+                        val level = Helper.chooseLevel()
                         level match {
                             case "1" =>
-                                // TODO: Create an easy AI
-                                AIPlayer("easy")
+                                AIEasyPlayer(random = r)
                             case "2" =>
-                                // TODO: Create a medium AI
-                                AIPlayer("medium")
+                                AIMediumPlayer(random = r)
                             case _ =>
-                                // TODO: Create a hard AI
-                                AIPlayer("hard")
+                                AIHardPlayer(random = r)
                         }
-                        */
                 }
-                // Enter player 1 name
-                println("What will be the name of player 1?")
-                val namePlayer1: String = StdIn.readLine()
-                val player1WithoutShip: HumanPlayer = HumanPlayer(namePlayer1)
+                val player1: Player = player1Empty.updateInformation()
+                val player2: Player = player2Empty.updateInformation()
 
-                val player1: HumanPlayer = player1WithoutShip.createShips(Config.TYPESHIP,
-                    () => Helper.chooseLetter(Config.TEXT_POSITIONING_SHIP),
-                    () => Helper.chooseNumber(Config.TEXT_POSITIONING_SHIP),
-                    () => Helper.chooseDirection()
-                )
-
-                //TODO: Rec Play Turn
                 val gameState = GameState(player1, player2)
                 val winner: Player = playGame(gameState)
                 println(s"The winner is ${winner.name} ! Congratulations !")
             case "2" =>
                 //TODO: Look how to write into a file and to play against other AI
+                /*
+                val easyAI: AIEasyPlayer = AIEasyPlayer()
+                val mediumAI: AIMediumPlayer = AIMediumPlayer()
+                val hardAI: AIHardPlayer = AIHardPlayer()
+                val winWeakAI: Int = playGameBetweenAI()*/
                 println("I wrote a 2")
             case _ =>
                 println("See you soon at the battleship application!")
@@ -76,7 +65,7 @@ object Game extends App {
         }
 
         println("What do you want to do next?")
-        main()
+        main(r)
     }
 
     /**
@@ -110,13 +99,7 @@ object Game extends App {
         println("    Grid of your shots\n")
         gameState.player2.grid.displayGridShots() //With the grid of the player2 we only display cells shot
 
-
-        // User inputs for the shot
-        val letter = Helper.chooseLetter(Config.TEXT_SHOOT)
-        val number = Helper.chooseNumber(Config.TEXT_SHOOT)
-
-        // Shot and return the new game state after the shot
-        val cell = Cell(letter, number, TypeCell.UNKNOWN)
+        val cell: Cell = gameState.player1.getInfoForShot()
         gameState.player1.shot(cell, gameState) // this new game state swap player 1 and player 2 and
     }
 }
