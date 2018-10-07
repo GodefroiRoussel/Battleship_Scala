@@ -45,20 +45,28 @@ object Game extends App {
                                 AIHardPlayer(random = r)
                         }
                 }
-                val player1: Player = player1Empty.updateInformation()
-                val player2: Player = player2Empty.updateInformation()
+                val gameState: GameState = initiateGame(player1Empty, player2Empty)
 
-                val gameState = GameState(player1, player2)
                 val winner: Player = playGame(gameState)
                 println(s"The winner is ${winner.name} ! Congratulations !")
             case "2" =>
-                //TODO: Look how to write into a file and to play against other AI
-                /*
-                val easyAI: AIEasyPlayer = AIEasyPlayer()
-                val mediumAI: AIMediumPlayer = AIMediumPlayer()
-                val hardAI: AIHardPlayer = AIHardPlayer()
-                val winWeakAI: Int = playGameBetweenAI()*/
-                println("I wrote a 2")
+                val creatingEasyAI: Player = AIEasyPlayer(random = r)
+                val easyAI: Player = creatingEasyAI.updateInformation()
+
+                val creatingMediumAI: Player = AIMediumPlayer(random = r)
+                val mediumAI: Player = creatingMediumAI.updateInformation()
+
+                val creatingHardAI: Player = AIHardPlayer(random = r)
+                val hardAI: Player = creatingHardAI.updateInformation()
+
+                val numberWinWeakAIAgainstMedium: Int = playGamesBetweenAI(easyAI, mediumAI, 100, 0)
+                val numberWinWeakAIAgainstHard: Int = playGamesBetweenAI(easyAI, hardAI, 100, 0)
+                val numberWinMediumAIAgainstHard: Int = playGamesBetweenAI(mediumAI, hardAI, 100, 0)
+
+                println("numberWinWeakAIAgainstMedium = "+numberWinWeakAIAgainstMedium)
+                println("numberWinWeakAIAgainstHard = "+numberWinWeakAIAgainstHard)
+                println("numberWinMediumAIAgainstHard = "+numberWinMediumAIAgainstHard)
+
             case _ =>
                 println("See you soon at the battleship application!")
                 return
@@ -66,6 +74,34 @@ object Game extends App {
 
         println("What do you want to do next?")
         main(r)
+    }
+
+    def initiateGame(player1Empty: Player, player2Empty: Player): GameState = {
+        val player1: Player = player1Empty.updateInformation()
+        val player2: Player = player2Empty.updateInformation()
+
+        GameState(player1, player2)
+    }
+
+    def playGamesBetweenAI(AI1: Player, AI2: Player, nbGameToPlay: Int, nbWinFirstAI: Int): Int ={
+        if (nbGameToPlay == 0){
+            nbWinFirstAI
+        } else {
+            // Switch each game the beginner of the game and place new ships
+            val turn: Int = nbGameToPlay % 2
+            val gameState: GameState = turn match {
+                case 0 => initiateGame(AI1, AI2)
+                case _ => initiateGame(AI2, AI1)
+            }
+            println(nbGameToPlay)
+            val winner: Player = playGame(gameState)
+            println(winner.name)
+            if(winner.name == AI1.name){
+                playGamesBetweenAI(AI1, AI2, nbGameToPlay-1, nbWinFirstAI+1)
+            } else {
+                playGamesBetweenAI(AI1, AI2, nbGameToPlay-1, nbWinFirstAI)
+            }
+        }
     }
 
     /**
