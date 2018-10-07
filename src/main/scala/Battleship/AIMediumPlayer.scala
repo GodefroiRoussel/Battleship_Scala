@@ -42,10 +42,10 @@ case class AIMediumPlayer(name: String = "Medium", ships: List[Ship] = List(), g
         AIMediumPlayer(this.name, ships, grid, this.random)
     }
 
-    override def getInfoForShot(): Cell = {
+    override def getInfoForShot(opponentPlayer: Player): Cell = {
         val cell: Cell = Cell(this.random.nextInt(10), this.random.nextInt(10), TypeCell.UNKNOWN)
-        if (this.grid.checkCell(cell) == TypeCell.TOUCHED || this.grid.checkCell(cell) == TypeCell.WATER){
-            this.getInfoForShot()
+        if (opponentPlayer.grid.checkCell(cell) == TypeCell.TOUCHED || opponentPlayer.grid.checkCell(cell) == TypeCell.WATER){
+            this.getInfoForShot(opponentPlayer)
         } else {
             cell
         }

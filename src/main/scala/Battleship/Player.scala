@@ -90,7 +90,8 @@ trait Player {
 
     /**
       * Function that get info for shot (it can be either an input or a random or any other method)
+      * @param opponentPlayer: Player: the opponent player
       * @return the cell to shoot
       */
-    def getInfoForShot(): Cell
+    def getInfoForShot(opponentPlayer: Player): Cell
 }

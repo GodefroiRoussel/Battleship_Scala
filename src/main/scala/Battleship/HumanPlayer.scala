@@ -60,7 +60,7 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
         }
     }
 
-    override def getInfoForShot(): Cell = {
+    override def getInfoForShot(opponentPlayer: Player): Cell = {
         // User inputs for the shot
         val letter = Helper.chooseLetter(Config.TEXT_SHOOT)
         val number = Helper.chooseNumber(Config.TEXT_SHOOT)

@@ -41,7 +41,7 @@ case class AIEasyPlayer(name: String = "Easy", ships: List[Ship] = List(), grid:
         AIEasyPlayer(this.name, ships, grid, this.random)
     }
 
-    override def getInfoForShot(): Cell = {
+    override def getInfoForShot(opponentPlayer: Player): Cell = {
         Cell(this.random.nextInt(10), this.random.nextInt(10), TypeCell.UNKNOWN)
     }
 }

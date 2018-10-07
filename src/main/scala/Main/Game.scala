@@ -99,7 +99,7 @@ object Game extends App {
         println("    Grid of your shots\n")
         gameState.player2.grid.displayGridShots() //With the grid of the player2 we only display cells shot
 
-        val cell: Cell = gameState.player1.getInfoForShot()
+        val cell: Cell = gameState.player1.getInfoForShot(gameState.player2)
         gameState.player1.shot(cell, gameState) // this new game state swap player 1 and player 2 and
     }
 }
