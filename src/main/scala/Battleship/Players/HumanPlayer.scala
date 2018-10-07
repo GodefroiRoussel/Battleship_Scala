@@ -1,7 +1,7 @@
 package Battleship.Players
 
 import Battleship._
-import Helpers.Helper
+import Helpers.{Display, Helper}
 
 import scala.io.StdIn
 import scala.util.Random
@@ -13,7 +13,7 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
             HumanPlayer(this.name, this.ships, this.grid)
         } else {
             val firstTypeShip: TypeShip = typeShips.head
-            println(s"You have to place the ship ${firstTypeShip.name}, it has a size of ${firstTypeShip.size} cells.")
+            Display.show(s"You have to place the ship ${firstTypeShip.name}, it has a size of ${firstTypeShip.size} cells.")
             //Get input of the user to create the cell of origin and then create a temporary ship until check
             val letter = f1()
             val number = f2()
@@ -30,7 +30,7 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
                     val newTypeShips: List[TypeShip] = typeShips.tail
                     newPlayer.createShips(newTypeShips, f1, f2, f3)
                 case false =>
-                    println("Your ship is not well positioned on the grid. Please try again.\n")
+                    Display.show("Your ship is not well positioned on the grid. Please try again.\n")
                     this.createShips(typeShips, f1, f2, f3)
             }
         }
@@ -45,7 +45,7 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
     }
 
     override def updateInformation(): Player = {
-        println(s"What will be the name of player ${this.name}?")
+        Display.show(s"What will be the name of player ${this.name}?")
         val namePlayer: String = StdIn.readLine()
         if (!namePlayer.isEmpty){
             val player: HumanPlayer = HumanPlayer(namePlayer)
@@ -55,7 +55,7 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
                 () => Helper.chooseNumber(Config.TEXT_POSITIONING_SHIP),
                 () => Helper.chooseDirection())
         } else {
-            println("You must choose a name, maybe in a next version you will be in high scores !")
+            Display.show("You must choose a name, maybe in a next version you will be in high scores !")
             this.updateInformation()
         }
     }
@@ -66,5 +66,7 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
         val number = Helper.chooseNumber(Config.TEXT_SHOOT)
         Cell(letter, number, TypeCell.UNKNOWN)
     }
+
+    override def isHuman(): Boolean = true
 
 }

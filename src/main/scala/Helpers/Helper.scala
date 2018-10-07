@@ -12,7 +12,7 @@ object Helper {
       * @return the input of the user
       */
     def chooseMode(): String = {
-        println ("Do you want to play to the battleship or do you want to see AI fights ?\n" +
+        Display.show ("Do you want to play to the battleship or do you want to see AI fights ?\n" +
             "Press 1 to play the game.\n" +
             "Press 2 to see AI fights.\n" +
             "Press any other key to quit the program.\n")
@@ -28,7 +28,7 @@ object Helper {
       * @return the input of the user
       */
     def chooseOpponent(): String = {
-        println ("Do you want to play against a human or against an AI?\n" +
+        Display.show ("Do you want to play against a human or against an AI?\n" +
             "Press 1 to play against a human.\n" +
             "Press 2 to play against an AI.\n")
 
@@ -39,7 +39,7 @@ object Helper {
                 opponent
             case _ =>
                 // Choose an Opponent again
-                println("You choosed a wrong parameter. Please try again.\n")
+                Display.show("You choosed a wrong parameter. Please try again.\n")
                 chooseOpponent()
         }
     }
@@ -53,7 +53,7 @@ object Helper {
       * @return the input of the user
       */
     def chooseLevel(): String = {
-        println ("Which AI do you want to play against?\n" +
+        Display.show("Which AI do you want to play against?\n" +
             "Press 1 to play against an easy AI.\n" +
             "Press 2 to play against a medium AI.\n" +
             "Press 3 to play against a hard AI.\n")
@@ -65,7 +65,7 @@ object Helper {
                 level
             case _ =>
                 // Choose an Opponent again
-                println("You choosed a wrong parameter. Please try again.\n")
+                Display.show("You choosed a wrong parameter. Please try again.\n")
                 chooseLevel()
         }
     }
@@ -75,19 +75,19 @@ object Helper {
       * @return the user input
       */
     def chooseLetter(s: String): Int = {
-        println(s)
-        println ("You can say a letter between A and J\n")
+        Display.show(s)
+        Display.show ("You can say a letter between A and J\n")
 
         val input = StdIn.readLine().toUpperCase()
         if(input.isEmpty) {
-            println("You choosed a wrong parameter. Please try again.\n")
+            Display.show("You choosed a wrong parameter. Please try again.\n")
             chooseLetter(s)
         } else {
             val letter: Char = input.head
             letter match {
                 case 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' => letter.toInt-65
                 case _ =>
-                    println("You choosed a wrong parameter. Please try again.\n")
+                    Display.show("You choosed a wrong parameter. Please try again.\n")
                     chooseLetter(s)
             }
         }
@@ -98,15 +98,15 @@ object Helper {
       * @return the user input
       */
     def chooseNumber(s: String): Int = {
-        println(s)
-        println("You can say a number between 0 and 9\n")
+        Display.show(s)
+        Display.show("You can say a number between 0 and 9\n")
 
         val number = StdIn.readLine()
         number match {
             case "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" =>
                 number.toInt
             case _ =>
-                println("You choosed a wrong parameter. Please try again.\n")
+                Display.show("You choosed a wrong parameter. Please try again.\n")
                 chooseNumber(s)
         }
     }
@@ -116,7 +116,7 @@ object Helper {
       * @return the user input
       */
     def chooseDirection(): Int = {
-        println("You can say a number between 1 and 4.\n" +
+        Display.show("You can say a number between 1 and 4.\n" +
             "Press 1 to position your ship toward the top.\n" +
             "Press 2 to position your ship toward the right.\n" +
             "Press 3 to position your ship toward the bottom.\n" +
@@ -127,7 +127,7 @@ object Helper {
             case "1" | "2" | "3" | "4" =>
                 number.toInt
             case _ =>
-                println("You choosed a wrong parameter. Please try again.\n")
+                Display.show("You choosed a wrong parameter. Please try again.\n")
                 chooseDirection()
         }
     }

@@ -15,7 +15,7 @@ case class GameState(player1: Player, player2: Player)
 object Game extends App {
 
     val r = new Random
-    println("Hello, you are now in the battleship application!")
+    Display.show("Hello, you are now in the battleship application!")
 
     main(r)
 
@@ -51,7 +51,7 @@ object Game extends App {
                 val gameState: GameState = initiateGame(player1Empty, player2Empty)
 
                 val winner: Player = playGame(gameState)
-                println(s"The winner is ${winner.name} ! Congratulations !")
+                Display.show(s"The winner is ${winner.name} ! Congratulations !")
             case "2" =>
                 val creatingEasyAI: Player = AIEasyPlayer(random = r)
                 val easyAI: Player = creatingEasyAI.updateInformation()
@@ -73,15 +73,15 @@ object Game extends App {
 
                 writeToFile("./ai_proof.csv", content)
 
-                println(content)
-                println("You can find these information on the file ai_proof.csv")
+                Display.show(content)
+                Display.show("You can find these information on the file ai_proof.csv")
 
             case _ =>
-                println("See you soon at the battleship application!")
+                Display.show("See you soon at the battleship application!")
                 return
         }
 
-        println("What do you want to do next?")
+        Display.show("What do you want to do next?")
         main(r)
     }
 
@@ -116,9 +116,8 @@ object Game extends App {
                 case 0 => initiateGame(AI1, AI2)
                 case _ => initiateGame(AI2, AI1)
             }
-            println(nbGameToPlay)
+
             val winner: Player = playGame(gameState)
-            println(winner.name)
             if(winner.name == AI1.name){
                 playGamesBetweenAI(AI1, AI2, nbGameToPlay-1, nbWinFirstAI+1)
             } else {
@@ -149,14 +148,20 @@ object Game extends App {
       * @return the new game state at the end of the turn (after the shot)
       */
     def playTurn(gameState: GameState): GameState = {
-        //println(s"It's the turn of ${gameState.player1.name}.")
+        if (gameState.player1.isHuman()){
+            Display.show(s"It's the turn of ${gameState.player1.name}.")
 
-        // Display grids
-        //println("    Your grid\n")
-        //gameState.player1.grid.displayGridShips() //Display ships and cells shot
-        //println()
-        //println("    Grid of your shots\n")
-        //gameState.player2.grid.displayGridShots() //With the grid of the player2 we only display cells shot
+            // Display grids
+            Display.show("    Your grid\n")
+            // TODO: CHANGE TO ConsoleDisplay.show
+            Display.showGridShips(gameState.player1.grid) //Display ships and cells shot
+
+            Display.show("")
+            Display.show("    Grid of your shots\n")
+
+            // TODO: CHANGE TO ConsoleDisplay.show
+            Display.showGridShots(gameState.player2.grid) //With the grid of the player2 we only show cells shot
+        }
 
         val cell: Cell = gameState.player1.getInfoForShot(gameState.player2)
         gameState.player1.shot(cell, gameState) // this new game state swap player 1 and player 2 and

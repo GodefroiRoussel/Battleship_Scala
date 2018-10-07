@@ -1,6 +1,7 @@
 package Battleship.Players
 
 import Battleship._
+import Helpers.Display
 import Main.GameState
 
 import scala.util.Random
@@ -47,15 +48,17 @@ trait Player {
                     // Check if contains in the ship the cell with the type OCCUPIED or TOUCHED and then hit else return the ship
                     if (ship.cells.contains(cell.copy(typeCell = TypeCell.OCCUPIED)) || ship.cells.contains(cell.copy(typeCell = TypeCell.TOUCHED))) {
                         val tempShip: Ship = ship.hit(cell)
-                        println("You hitted a ship !\n")
-                        if (tempShip.isSunk()) {
-                            println(s"Well done ! The ${tempShip.typeShip.name} is sunk.\n")
+                        if (this.isHuman()){
+                            Display.show("You hitted a ship !\n")
+                            if (tempShip.isSunk()) {
+                                Display.show(s"Well done ! The ${tempShip.typeShip.name} is sunk.\n")
+                            }
                         }
                         tempShip
                     } else ship
                 })
             case _ =>
-                println("Plouf ! You missed your shot\n")
+                if(this.isHuman()) Display.show("Plouf ! You missed your shot\n")
                 gameState.player2.ships
         }
 
@@ -95,4 +98,10 @@ trait Player {
       * @return the cell to shoot
       */
     def getInfoForShot(opponentPlayer: Player): Cell
+
+    /**
+      * Function that say if a player is human or not
+      * @return true if the player is human else no
+      */
+    def isHuman(): Boolean
 }

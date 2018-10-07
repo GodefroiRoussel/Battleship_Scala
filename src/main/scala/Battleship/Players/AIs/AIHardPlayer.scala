@@ -83,7 +83,7 @@ case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid:
 
                 // If the list of "good" cells is not empty then we can return the firt cell and try to shot here and see if the cell is OCCUPIED else
                 if (listGoodCellsNextToTouchedCells.nonEmpty) {
-                    return listGoodCellsNextToTouchedCells.head
+                    listGoodCellsNextToTouchedCells.head
                 } else randomCell
             } else randomCell
         }
