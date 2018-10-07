@@ -78,6 +78,14 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
         this.cells(cell.x)(cell.y).typeCell
     }
 
+    /**
+      * Function that list cells touched
+      * @return the list of cells touched
+      */
+    def listTouchedCell(): List[Cell] = {
+        this.cells.flatten.filter(cell => cell.typeCell == TypeCell.TOUCHED)
+    }
+
     //TODO: TO REFACTOR WITH A HIGH ORDER FUNCTION
 
     /**
