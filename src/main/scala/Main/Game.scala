@@ -48,8 +48,14 @@ object Game extends App {
                                 AIHardPlayer(random = r)
                         }
                 }
-                val gameState: GameState = initiateGame(player1Empty, player2Empty)
 
+                // Random player beginning the game
+                val gameState: GameState = r.nextInt(2) match {
+                    case 0 => initiateGame(player1Empty, player2Empty)
+                    case _ => initiateGame(player2Empty, player1Empty)
+                }
+
+                // Play the game and keep the winner
                 val winner: Player = playGame(gameState)
                 Display.show(s"The winner is ${winner.name} ! Congratulations !")
             case "2" =>
