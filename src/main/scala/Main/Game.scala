@@ -1,10 +1,9 @@
 package Main
 
 import Battleship._
-import Helper._
+import Helpers._
 
 import scala.util.Random
-import scala.io.StdIn
 import java.io.{BufferedWriter, FileWriter}
 
 import Battleship.Players.AIs.{AIEasyPlayer, AIHardPlayer, AIMediumPlayer}

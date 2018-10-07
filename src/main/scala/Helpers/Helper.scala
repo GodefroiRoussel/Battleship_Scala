@@ -1,4 +1,4 @@
-package Helper
+package Helpers
 
 import scala.io.StdIn
 

@@ -1,7 +1,7 @@
 package Battleship.Players
 
 import Battleship._
-import Helper.Helper
+import Helpers.Helper
 
 import scala.io.StdIn
 import scala.util.Random
