@@ -1,5 +1,5 @@
 # Created by Jayesh J.
-#https://gist.github.com/jadhavj/837c0071d4a791924b7e8512d316d748
+# Source : https://gist.github.com/jadhavj/837c0071d4a791924b7e8512d316d748
 
 *.class
 *.log
@@ -26,3 +26,6 @@ project/target/
 target/
 .scala_dependencies
 .worksheet
+
+#Add by Godefroi Roussel
+ai_proof.csv

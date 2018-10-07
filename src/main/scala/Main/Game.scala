@@ -5,6 +5,7 @@ import Helper._
 
 import scala.util.Random
 import scala.io.StdIn
+import java.io.{BufferedWriter, FileWriter}
 
 // player1 is the current player and player2 is the opponent, it is swapped at each end of turn
 case class GameState(player1: Player, player2: Player)
@@ -63,9 +64,15 @@ object Game extends App {
                 val numberWinWeakAIAgainstHard: Int = playGamesBetweenAI(easyAI, hardAI, 100, 0)
                 val numberWinMediumAIAgainstHard: Int = playGamesBetweenAI(mediumAI, hardAI, 100, 0)
 
-                println("numberWinWeakAIAgainstMedium = "+numberWinWeakAIAgainstMedium)
-                println("numberWinWeakAIAgainstHard = "+numberWinWeakAIAgainstHard)
-                println("numberWinMediumAIAgainstHard = "+numberWinMediumAIAgainstHard)
+                val content: String = s"AI Name; score; AI Name2; score2\n" +
+                    s"AI Level Beginner; $numberWinWeakAIAgainstMedium; Level Medium; ${100-numberWinWeakAIAgainstMedium}\n" +
+                    s"AI Level Beginner; $numberWinWeakAIAgainstHard;  Level Hard; ${100 - numberWinWeakAIAgainstHard}\n" +
+                    s"AI Level Medium; $numberWinMediumAIAgainstHard; Level Hard; ${100 - numberWinMediumAIAgainstHard}\n"
+
+                writeToFile("./ai_proof.csv", content)
+
+                println(content)
+                println("You can find these information on the file ai_proof.csv")
 
             case _ =>
                 println("See you soon at the battleship application!")
@@ -76,6 +83,12 @@ object Game extends App {
         main(r)
     }
 
+    /**
+      * Function that ask to 2 players to update their information, that means create their ships
+      * @param player1Empty: Player
+      * @param player2Empty: Player
+      * @return the game state to begin the game
+      */
     def initiateGame(player1Empty: Player, player2Empty: Player): GameState = {
         val player1: Player = player1Empty.updateInformation()
         val player2: Player = player2Empty.updateInformation()
@@ -126,16 +139,29 @@ object Game extends App {
       * @return the new game state at the end of the turn (after the shot)
       */
     def playTurn(gameState: GameState): GameState = {
-        println(s"It's the turn of ${gameState.player1.name}.")
+        //println(s"It's the turn of ${gameState.player1.name}.")
 
         // Display grids
-        println("    Your grid\n")
-        gameState.player1.grid.displayGridShips() //Display ships and cells shot
-        println()
-        println("    Grid of your shots\n")
-        gameState.player2.grid.displayGridShots() //With the grid of the player2 we only display cells shot
+        //println("    Your grid\n")
+        //gameState.player1.grid.displayGridShips() //Display ships and cells shot
+        //println()
+        //println("    Grid of your shots\n")
+        //gameState.player2.grid.displayGridShots() //With the grid of the player2 we only display cells shot
 
         val cell: Cell = gameState.player1.getInfoForShot(gameState.player2)
         gameState.player1.shot(cell, gameState) // this new game state swap player 1 and player 2 and
+    }
+
+
+    /**
+      * Function that write into a file the content put as parameters
+      * @param location: String: name and location of the file on the computer
+      * @param content: String: Content to write into the file
+      */
+    def writeToFile(location: String, content: String): Unit = {
+        val bw = new BufferedWriter(new FileWriter(location))
+        bw.write(content)
+        bw.flush()
+        bw.close()
     }
 }
