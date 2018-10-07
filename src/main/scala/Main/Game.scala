@@ -63,14 +63,14 @@ object Game extends App {
                 val creatingHardAI: Player = AIHardPlayer(random = r)
                 val hardAI: Player = creatingHardAI.updateInformation()
 
-                val numberWinWeakAIAgainstMedium: Int = playGamesBetweenAI(easyAI, mediumAI, 100, 0)
-                val numberWinWeakAIAgainstHard: Int = playGamesBetweenAI(easyAI, hardAI, 100, 0)
-                val numberWinMediumAIAgainstHard: Int = playGamesBetweenAI(mediumAI, hardAI, 100, 0)
+                val numberWinWeakAIAgainstMedium: Int = playGamesBetweenAI(easyAI, mediumAI, Config.NB_FIGHTS_AI, 0)
+                val numberWinWeakAIAgainstHard: Int = playGamesBetweenAI(easyAI, hardAI, Config.NB_FIGHTS_AI, 0)
+                val numberWinMediumAIAgainstHard: Int = playGamesBetweenAI(mediumAI, hardAI, Config.NB_FIGHTS_AI, 0)
 
                 val content: String = s"AI Name; score; AI Name2; score2\n" +
-                    s"AI Level Beginner; $numberWinWeakAIAgainstMedium; Level Medium; ${100-numberWinWeakAIAgainstMedium}\n" +
-                    s"AI Level Beginner; $numberWinWeakAIAgainstHard;  Level Hard; ${100 - numberWinWeakAIAgainstHard}\n" +
-                    s"AI Level Medium; $numberWinMediumAIAgainstHard; Level Hard; ${100 - numberWinMediumAIAgainstHard}\n"
+                    s"AI Level Beginner; $numberWinWeakAIAgainstMedium; Level Medium; ${Config.NB_FIGHTS_AI-numberWinWeakAIAgainstMedium}\n" +
+                    s"AI Level Beginner; $numberWinWeakAIAgainstHard;  Level Hard; ${Config.NB_FIGHTS_AI - numberWinWeakAIAgainstHard}\n" +
+                    s"AI Level Medium; $numberWinMediumAIAgainstHard; Level Hard; ${Config.NB_FIGHTS_AI - numberWinMediumAIAgainstHard}\n"
 
                 writeToFile("./ai_proof.csv", content)
 
@@ -162,7 +162,6 @@ object Game extends App {
         val cell: Cell = gameState.player1.getInfoForShot(gameState.player2)
         gameState.player1.shot(cell, gameState) // this new game state swap player 1 and player 2 and
     }
-
 
     /**
       * Function that write into a file the content put as parameters

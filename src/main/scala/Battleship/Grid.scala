@@ -1,5 +1,7 @@
 package Battleship
 
+import scala.annotation.tailrec
+
 /*
 Coordinate System
 
@@ -23,7 +25,7 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
         // For each cell of the ship we check if the cell is outside (that means not between 1 and 10)
         // or if the type of the cell of the grid is occupied else true
         tempShip.cells.count(cell => {
-            if (cell.x < 10 && cell.x >= 0 && cell.y < 10 && cell.y >= 0) {
+            if (cell.x < Config.GRID_SIZE && cell.x >= 0 && cell.y < Config.GRID_SIZE && cell.y >= 0) {
                 this.cells(cell.x)(cell.y).typeCell match {
                     case TypeCell.OCCUPIED => false
                     case _ => true
@@ -39,6 +41,13 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
       */
     def placeShip(ship: Ship): Grid = {
 
+        /**
+          * Function that position cells on the grid
+          * @param cells: List[Cell]: List of cells to position
+          * @param grid: Grid: The grid where to position cells
+          * @return the grid with cells positioned
+          */
+        @tailrec
         def placeCellOnGrid(cells: List[Cell], grid: Grid) : Grid = {
             if (cells.isEmpty) grid
             else {
@@ -111,6 +120,7 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
           * @param x: Int: Number of the row
           * @param y: Int; Number of the column
           */
+        @tailrec
         def displayGridShipsTR(x: Int, y: Int): Unit = {
             if(x == 0) print(y+" ")
 
@@ -150,6 +160,7 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
           * @param x: Int: Number of the row
           * @param y: Int; Number of the column
           */
+        @tailrec
         def displayGridShipsTR(x: Int, y: Int): Unit = {
             if(x == 0) print(y+" ")
 
@@ -181,10 +192,11 @@ object Grid {
           * @param x: Int : It represents the row where create cells
           * @return all cells of the grid (that means a List of ( List of Cell )
           */
-        def createCells(x: Int) : List[List[Cell]] = {
-            if (x>9) Nil
+        @tailrec
+        def createCells(x: Int, listCells: List[List[Cell]]) : List[List[Cell]] = {
+            if (x> Config.GRID_SIZE-1) listCells
             else {
-                createColumn(x, 0) :: createCells(x+1)
+                createCells(x+1,  listCells :+ createColumn(x,0, List()))
             }
         }
 
@@ -192,14 +204,17 @@ object Grid {
           * Function creating all cells for a column.
           * @param x : Int : It represents the row where create cells
           * @param y : Int : It represents the index of the column
+          * @param cells: List[Cell]: Accumulate the creation of the column
           * @return a column of cell initialisated : a list of cell
           */
-        def createColumn(x: Int, y: Int): List[Cell] = {
-            if (y > 9) Nil
+        @tailrec
+        def createColumn(x: Int, y: Int, cells: List[Cell]): List[Cell] = {
+            if (y > Config.GRID_SIZE-1) cells
             else {
-                Cell(x,y,TypeCell.UNKNOWN) :: createColumn(x, y+1)
+                createColumn(x, y+1, cells :+ Cell(x,y,TypeCell.UNKNOWN) )
             }
         }
-        Grid(createCells(0))
+
+        Grid(createCells(0, List()))
     }
 }
