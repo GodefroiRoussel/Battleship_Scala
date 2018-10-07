@@ -153,13 +153,11 @@ object Game extends App {
 
             // Display grids
             Display.show("    Your grid\n")
-            // TODO: CHANGE TO ConsoleDisplay.show
             Display.showGridShips(gameState.player1.grid) //Display ships and cells shot
 
             Display.show("")
             Display.show("    Grid of your shots\n")
 
-            // TODO: CHANGE TO ConsoleDisplay.show
             Display.showGridShots(gameState.player2.grid) //With the grid of the player2 we only show cells shot
         }
 
