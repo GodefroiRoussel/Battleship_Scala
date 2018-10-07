@@ -43,49 +43,49 @@ case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid:
 
     /**
       * The hard AI choose a random cell just in case.
-      * If the opponent of the AI has touched cells then the AI list the good cells next to touched cells.
+      * If the random cell has already be shooted then we call back the getInfoForShot to find another random cell which has not been shooted before
+      * Else if the opponent of the AI has touched cells then the AI list the good cells next to touched cells.
       * That means, only keep cells inside the grid and non-touched cells. Then if exists at least one "good" cell
       * then select the first cell of this list. While another cell is not shot, the AI shot on the left then on the right, then on the top and end with the bottom.
       * @param opponentPlayer: Player: the opponent player
       * @return the cell to shoot
       */
     override def getInfoForShot(opponentPlayer: Player): Cell = {
-        val randomCell: Cell = Cell(this.random.nextInt(10), this.random.nextInt(10), TypeCell.UNKNOWN)
+        val randomCell: Cell = Cell(this.random.nextInt(Config.GRID_SIZE), this.random.nextInt(Config.GRID_SIZE), TypeCell.UNKNOWN)
 
-        val grid: Grid = opponentPlayer.grid
-        val listTouchedCell: List[Cell] = grid.listTouchedCell()
-        if(listTouchedCell.nonEmpty) {
-            // List cells next to touched cells and only keep cells that are in the grid and not already discovered (i.e. TOUCHED or WATER)
-            val listGoodCellsNextToTouchedCells: List[Cell] = listTouchedCell.flatten(cell => {
-                val wrongCell: Cell = Cell(-1,-1, TypeCell.UNKNOWN)
-                val cellLeft: Cell = cell.x match {
-                    case 0 => wrongCell
-                    case _ => grid.cells(cell.x-1)(cell.y)
-                }
-                val cellRight: Cell = cell.x match {
-                    case 9 => wrongCell
-                    case _ => grid.cells(cell.x+1)(cell.y)
-                }
-                val cellTop: Cell = cell.y match {
-                    case 0 => wrongCell
-                    case _ => grid.cells(cell.x)(cell.y-1)
-                }
-                val cellBottom: Cell = cell.y match {
-                    case 9 => wrongCell
-                    case _ => grid.cells(cell.x)(cell.y+1)
-                }
-                List(cellLeft, cellRight, cellTop, cellBottom)
-            }).filter(cell => cell.x < 10 && cell.y < 10 && cell.x >= 0 && cell.y >= 0 && (cell.typeCell == TypeCell.UNKNOWN || cell.typeCell == TypeCell.OCCUPIED))
-
-            if (listGoodCellsNextToTouchedCells.nonEmpty){
-                return listGoodCellsNextToTouchedCells.head
-            } else randomCell
-        }
-
-        if (opponentPlayer.grid.checkCell(randomCell) == TypeCell.TOUCHED || opponentPlayer.grid.checkCell(randomCell) == TypeCell.WATER){
+        if (opponentPlayer.grid.checkCell(randomCell) == TypeCell.TOUCHED || opponentPlayer.grid.checkCell(randomCell) == TypeCell.WATER) {
             this.getInfoForShot(opponentPlayer)
         } else {
-            randomCell
+            val grid: Grid = opponentPlayer.grid
+            val listTouchedCell: List[Cell] = grid.listTouchedCell()
+            if (listTouchedCell.nonEmpty) {
+                // List cells next to touched cells and only keep cells that are in the grid and not already discovered (i.e. TOUCHED or WATER)
+                val listGoodCellsNextToTouchedCells: List[Cell] = listTouchedCell.flatten(cell => {
+                    val wrongCell: Cell = Cell(-1, -1, TypeCell.UNKNOWN)
+                    val cellLeft: Cell = cell.x match {
+                        case 0 => wrongCell
+                        case _ => grid.cells(cell.x - 1)(cell.y)
+                    }
+                    val cellRight: Cell = cell.x match {
+                        case 9 => wrongCell
+                        case _ => grid.cells(cell.x + 1)(cell.y)
+                    }
+                    val cellTop: Cell = cell.y match {
+                        case 0 => wrongCell
+                        case _ => grid.cells(cell.x)(cell.y - 1)
+                    }
+                    val cellBottom: Cell = cell.y match {
+                        case 9 => wrongCell
+                        case _ => grid.cells(cell.x)(cell.y + 1)
+                    }
+                    List(cellLeft, cellRight, cellTop, cellBottom)
+                }).filter(cell => cell.x < Config.GRID_SIZE && cell.y < Config.GRID_SIZE && cell.x >= 0 && cell.y >= 0 && (cell.typeCell == TypeCell.UNKNOWN || cell.typeCell == TypeCell.OCCUPIED))
+
+                // If the list of "good" cells is not empty then we can return the firt cell and try to shot here and see if the cell is OCCUPIED else
+                if (listGoodCellsNextToTouchedCells.nonEmpty) {
+                    return listGoodCellsNextToTouchedCells.head
+                } else randomCell
+            } else randomCell
         }
     }
 }
