@@ -11,7 +11,6 @@ case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid:
             AIHardPlayer(this.name, this.ships, this.grid, this.random)
         } else {
             val firstTypeShip: TypeShip = typeShips.head
-            println(s"You have to place the ship ${firstTypeShip.name}, it has a size of ${firstTypeShip.size} cells.")
             //Get input of the user to create the cell of origin and then create a temporary ship until check
             val letter = f1()
             val number = f2()
@@ -28,7 +27,6 @@ case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid:
                     val newTypeShips: List[TypeShip] = typeShips.tail
                     newPlayer.createShips(newTypeShips, f1, f2, f3)
                 case false =>
-                    println("Your ship is not well positioned on the grid. Please try again.\n")
                     this.createShips(typeShips, f1, f2, f3)
             }
         }
