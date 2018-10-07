@@ -1,4 +1,5 @@
-import Battleship._
+package Battleship
+
 import org.scalatest._
 
 class ShipTest extends FunSuite with DiagrammedAssertions {

@@ -1,4 +1,4 @@
-import Battleship._
+package Battleship
 
 import org.scalatest._
 

@@ -1,4 +1,5 @@
-import Battleship.{Cell, TypeCell}
+package Battleship
+
 import org.scalatest._
 
 class CellTest extends FunSuite with DiagrammedAssertions {
