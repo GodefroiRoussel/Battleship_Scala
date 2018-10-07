@@ -1,4 +1,7 @@
-package Battleship
+package Battleship.Players.AIs
+
+import Battleship.Config
+import Battleship.Players.Player
 
 trait AI extends Player{
 

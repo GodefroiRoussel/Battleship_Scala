@@ -1,10 +1,11 @@
-package Battleship
+package Battleship.Players.AIs
 
-import Main.GameState
+import Battleship.Players.Player
+import Battleship._
 
 import scala.util.Random
 
-case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid: Grid = Grid.createGrid(), random: Random = new Random) extends Battleship.AI {
+case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid: Grid = Grid.createGrid(), random: Random = new Random) extends AI {
 
     override def createShips(typeShips: List[TypeShip], f1:() => Int, f2:() => Int, f3:() => Int): Player = {
         if (typeShips.isEmpty) {

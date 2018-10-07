@@ -7,6 +7,9 @@ import scala.util.Random
 import scala.io.StdIn
 import java.io.{BufferedWriter, FileWriter}
 
+import Battleship.Players.AIs.{AIEasyPlayer, AIHardPlayer, AIMediumPlayer}
+import Battleship.Players._
+
 // player1 is the current player and player2 is the opponent, it is swapped at each end of turn
 case class GameState(player1: Player, player2: Player)
 
@@ -96,6 +99,14 @@ object Game extends App {
         GameState(player1, player2)
     }
 
+    /**
+      * Function that play a certain number of games between two AI and keep in memory the number of win of the first AI
+      * @param AI1: Player: the first AI
+      * @param AI2: Player: the second AI
+      * @param nbGameToPlay: Int: The number of game to play
+      * @param nbWinFirstAI: Int: The number of game win by the first AI
+      * @return the number of game win by the first AI
+      */
     def playGamesBetweenAI(AI1: Player, AI2: Player, nbGameToPlay: Int, nbWinFirstAI: Int): Int ={
         if (nbGameToPlay == 0){
             nbWinFirstAI

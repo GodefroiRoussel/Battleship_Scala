@@ -1,5 +1,6 @@
-package Battleship
+package Battleship.Players
 
+import Battleship._
 import Main.GameState
 
 import scala.util.Random

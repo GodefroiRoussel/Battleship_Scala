@@ -1,16 +1,18 @@
-package Battleship
+package Battleship.Players.AIs
 
-import Main.GameState
+import Battleship.Players.Player
+import Battleship._
 
 import scala.util.Random
 
-case class AIMediumPlayer(name: String = "Medium", ships: List[Ship] = List(), grid: Grid = Grid.createGrid(), random: Random = new Random) extends Battleship.AI {
+case class AIEasyPlayer(name: String = "Easy", ships: List[Ship] = List(), grid: Grid = Grid.createGrid(), random: Random = new Random) extends AI {
 
     override def createShips(typeShips: List[TypeShip], f1:() => Int, f2:() => Int, f3:() => Int): Player = {
         if (typeShips.isEmpty) {
-            AIMediumPlayer(this.name, this.ships, this.grid, this.random)
+            AIEasyPlayer(this.name, this.ships, this.grid, this.random)
         } else {
             val firstTypeShip: TypeShip = typeShips.head
+
             //Get input of the user to create the cell of origin and then create a temporary ship until check
             val letter = f1()
             val number = f2()
@@ -23,7 +25,7 @@ case class AIMediumPlayer(name: String = "Medium", ships: List[Ship] = List(), g
                 case true =>
                     val newGrid: Grid = this.grid.placeShip(tempShip)
                     val newListShips: List[Ship] = tempShip :: this.ships
-                    val newPlayer: AI = AIMediumPlayer(this.name, newListShips, newGrid, this.random)
+                    val newPlayer: AI = AIEasyPlayer(this.name, newListShips, newGrid, this.random)
                     val newTypeShips: List[TypeShip] = typeShips.tail
                     newPlayer.createShips(newTypeShips, f1, f2, f3)
                 case false =>
@@ -32,21 +34,15 @@ case class AIMediumPlayer(name: String = "Medium", ships: List[Ship] = List(), g
         }
     }
 
-    override def copyShips(ships: List[Ship]): Player = {
-        AIMediumPlayer(this.name, ships, this.grid, this.random)
+    override def copyShips(newShips: List[Ship]): Player = {
+        AIEasyPlayer(this.name, ships = newShips, this.grid, this.random)
     }
 
     override def copyShipsAndGrid(ships: List[Ship], grid: Grid): Player = {
-        AIMediumPlayer(this.name, ships, grid, this.random)
+        AIEasyPlayer(this.name, ships, grid, this.random)
     }
 
     override def getInfoForShot(opponentPlayer: Player): Cell = {
-        val cell: Cell = Cell(this.random.nextInt(10), this.random.nextInt(10), TypeCell.UNKNOWN)
-        if (opponentPlayer.grid.checkCell(cell) == TypeCell.TOUCHED || opponentPlayer.grid.checkCell(cell) == TypeCell.WATER){
-            this.getInfoForShot(opponentPlayer)
-        } else {
-            cell
-        }
+        Cell(this.random.nextInt(10), this.random.nextInt(10), TypeCell.UNKNOWN)
     }
-
 }
