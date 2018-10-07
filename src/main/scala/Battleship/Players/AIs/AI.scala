@@ -7,8 +7,8 @@ trait AI extends Player{
 
     override def updateInformation(): Player = {
         this.createShips(Config.TYPESHIP,
-            () => random.nextInt(10),
-            () => random.nextInt(10),
-            () => random.nextInt(4))
+            () => random.nextInt(Config.GRID_SIZE),
+            () => random.nextInt(Config.GRID_SIZE),
+            () => random.nextInt(Config.NB_DIRECTION))
     }
 }
