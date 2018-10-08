@@ -13,6 +13,10 @@ object Display {
         print(s)
     }
 
+    def clearPage(): Unit = {
+        print("\033[H\033[2J")
+    }
+
     /**
       * Function that display the grid with ships and shots
       */

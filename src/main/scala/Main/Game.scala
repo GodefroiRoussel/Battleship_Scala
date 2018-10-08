@@ -155,6 +155,8 @@ object Game extends App {
       */
     def playTurn(gameState: GameState): GameState = {
         if (gameState.player1.isHuman()){
+            Thread.sleep(1000)
+            Display.clearPage()
             Display.show(s"It's the turn of ${gameState.player1.name}.")
 
             // Display grids
