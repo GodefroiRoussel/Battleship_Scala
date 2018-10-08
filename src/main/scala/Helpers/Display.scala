@@ -25,7 +25,7 @@ object Display {
       * Function that reset the display of the screen
       */
     def clearPage(): Unit = {
-        print("\033[H\033[2J")
+        print("\u001b[2J")
     }
 
     /**

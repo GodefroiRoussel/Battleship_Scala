@@ -15,7 +15,7 @@ case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid:
             //Get input of the user to create the cell of origin and then create a temporary ship until check
             val letter = f1()
             val number = f2()
-            val direction = f3()
+            val direction = f3()+1
             val cell = Cell(letter, number, TypeCell.OCCUPIED)
             val tempShip : Ship = Ship.createShip(firstTypeShip, cell, direction)
 
