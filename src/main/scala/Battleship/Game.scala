@@ -1,4 +1,4 @@
-package Main
+package Battleship
 
 import Battleship._
 import Helpers._

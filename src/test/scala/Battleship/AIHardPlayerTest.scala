@@ -2,7 +2,6 @@ package Battleship
 
 import Battleship.Players.AIs.AIHardPlayer
 import Battleship.Players.Player
-import Main.GameState
 import org.scalatest._
 
 import scala.util.Random

@@ -2,7 +2,6 @@ package Battleship.Players
 
 import Battleship._
 import Helpers.Display
-import Main.GameState
 
 import scala.util.Random
 
