@@ -48,7 +48,8 @@ I hope you enjoyed your game.
 
 ## Specifications
 
-###Players
+### Players
+
 This game must have several play modes:
 * Human vs Human
 * Human vs AI
@@ -60,7 +61,8 @@ The human should also able to choose between several AIs (see next part).
 
 At the end of a game, players should switch (the starting player is not the same in each game).
 
-###AI
+### AI
+
 The game should have 3 level of AIs:
 * Level Beginner: the AI shoots a square randomly (it can hit the same square several times),
 * Level Medium: should be better than AI Level Beginner,
