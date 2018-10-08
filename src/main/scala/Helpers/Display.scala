@@ -46,7 +46,7 @@ object Display {
             }
         }
 
-        Display.show("  A B C D E F G H I J")
+        Display.show("   A B C D E F G H I J")
         showGridTR(0, 0, grid, showCellGridShip)
         Display.show("")
     }
@@ -60,7 +60,11 @@ object Display {
       */
     @tailrec
     def showGridTR(x: Int, y: Int, grid: Grid, f1: Cell => Unit) : Unit = {
-        if(x == 0) Display.showSameLine(y+" ")
+        // Display the number at the beginning of the row and add a space if the y display has less than 2 number
+        if(x == 0) {
+            Display.showSameLine({y+1}+" ")
+            if (y<9) Display.showSameLine(" ")
+        }
 
         if (x < Config.GRID_SIZE) {
             f1(grid.cells(x)(y))
@@ -88,7 +92,7 @@ object Display {
             }
         }
 
-        Display.show("  A B C D E F G H I J")
+        Display.show("   A B C D E F G H I J")
         showGridTR(0, 0, grid, showCellGridShot)
         Display.show("")
     }

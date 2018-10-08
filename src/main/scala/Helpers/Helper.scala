@@ -99,12 +99,12 @@ object Helper {
       */
     def chooseNumber(s: String): Int = {
         Display.show(s)
-        Display.show("You can say a number between 0 and 9\n")
+        Display.show("You can say a number between 1 and 10\n")
 
         val number = StdIn.readLine()
         number match {
-            case "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" =>
-                number.toInt
+            case "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" =>
+                number.toInt-1
             case _ =>
                 Display.show("You choosed a wrong parameter. Please try again.\n")
                 chooseNumber(s)
