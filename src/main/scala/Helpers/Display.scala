@@ -1,18 +1,29 @@
 package Helpers
 
-import Battleship.{Cell, Grid, TypeCell}
+import Battleship.{Cell, Config, Grid, TypeCell}
 
 import scala.annotation.tailrec
 
 object Display {
+    /**
+      * Function displaying a line then going to another line
+      * @param s: String: The string to display
+      */
     def show(s: String) : Unit = {
         println(s)
     }
 
+    /**
+      * Function displaying a line
+      * @param s: String: The string to display
+      */
     def showSameLine(s: String): Unit = {
         print(s)
     }
 
+    /**
+      * Function that reset the display of the screen
+      */
     def clearPage(): Unit = {
         print("\033[H\033[2J")
     }
@@ -41,7 +52,6 @@ object Display {
     }
 
     /**
-      *
       * Function that show the grid with ships and shots of the opponent on your grid for
       * @param x: Int: Number of the row
       * @param y: Int; Number of the column
@@ -52,11 +62,11 @@ object Display {
     def showGridTR(x: Int, y: Int, grid: Grid, f1: Cell => Unit) : Unit = {
         if(x == 0) Display.showSameLine(y+" ")
 
-        if (x < 10) {
+        if (x < Config.GRID_SIZE) {
             f1(grid.cells(x)(y))
             showGridTR(x+1, y, grid, f1)
         }
-        else if (y < 9) {
+        else if (y < Config.GRID_SIZE-1) {
             Display.show("")
             showGridTR(0, y+1, grid, f1)
         }
