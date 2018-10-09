@@ -5,7 +5,7 @@ import Battleship._
 
 import scala.util.Random
 
-case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid: Grid = Grid.createGrid(), random: Random = new Random) extends AI {
+case class AIHardPlayer(name: String = "Hard AI", ships: List[Ship] = List(), grid: Grid = Grid.createGrid(), random: Random = new Random) extends AI {
 
     override def createShips(typeShips: List[TypeShip], f1:() => Int, f2:() => Int, f3:() => Int): Player = {
         if (typeShips.isEmpty) {
@@ -20,15 +20,14 @@ case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid:
             val tempShip : Ship = Ship.createShip(firstTypeShip, cell, direction)
 
             //Check if the ship is overlapping another ship or outside the board
-            this.grid.checkPosition(tempShip) match {
-                case true =>
-                    val newGrid: Grid = this.grid.placeShip(tempShip)
-                    val newListShips: List[Ship] = tempShip :: this.ships
-                    val newPlayer: AI = AIHardPlayer(this.name, newListShips, newGrid, this.random)
-                    val newTypeShips: List[TypeShip] = typeShips.tail
-                    newPlayer.createShips(newTypeShips, f1, f2, f3)
-                case false =>
-                    this.createShips(typeShips, f1, f2, f3)
+            if (this.grid.checkPosition(tempShip)) {
+                val newGrid: Grid = this.grid.placeShip(tempShip)
+                val newListShips: List[Ship] = tempShip :: this.ships
+                val newPlayer: AI = AIHardPlayer(this.name, newListShips, newGrid, this.random)
+                val newTypeShips: List[TypeShip] = typeShips.tail
+                newPlayer.createShips(newTypeShips, f1, f2, f3)
+            } else {
+                this.createShips(typeShips, f1, f2, f3)
             }
         }
     }
@@ -43,7 +42,7 @@ case class AIHardPlayer(name: String = "Hard", ships: List[Ship] = List(), grid:
 
     /**
       * The hard AI choose a random cell just in case.
-      * If the random cell has already be shooted then we call back the getInfoForShot to find another random cell which has not been shooted before
+      * If the random cell has already be hit then we call back the getInfoForShot to find another random cell which has not been shooted before
       * Else if the opponent of the AI has touched cells then the AI list the good cells next to touched cells.
       * That means, only keep cells inside the grid and non-touched cells. Then if exists at least one "good" cell
       * then select the first cell of this list. While another cell is not shot, the AI shot on the left then on the right, then on the top and end with the bottom.

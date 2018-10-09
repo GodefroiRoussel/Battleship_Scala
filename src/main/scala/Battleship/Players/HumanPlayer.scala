@@ -1,7 +1,7 @@
 package Battleship.Players
 
 import Battleship._
-import Helpers.{Display, Helper}
+import Helpers.{Display, Input}
 
 import scala.io.StdIn
 import scala.util.Random
@@ -21,17 +21,17 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
             val cell = Cell(letter, number, TypeCell.OCCUPIED)
             val tempShip : Ship = Ship.createShip(firstTypeShip, cell, direction)
 
-            //Check if the ship is overlapping another ship or outside the board
-            this.grid.checkPosition(tempShip) match {
-                case true =>
-                    val newGrid: Grid = this.grid.placeShip(tempShip)
-                    val newListShips: List[Ship] = tempShip :: this.ships
-                    val newPlayer: HumanPlayer = HumanPlayer(this.name, newListShips, newGrid)
-                    val newTypeShips: List[TypeShip] = typeShips.tail
-                    newPlayer.createShips(newTypeShips, f1, f2, f3)
-                case false =>
-                    Display.show("Your ship is not well positioned on the grid. Please try again.\n")
-                    this.createShips(typeShips, f1, f2, f3)
+            //Check if the ship is overlapping another ship or is outside the board
+            if (this.grid.checkPosition(tempShip)) {
+                // We place the boat on the grid, we update the list of ships, we update the player with these new info and we call again the function with the new player
+                val newGrid: Grid = this.grid.placeShip(tempShip)
+                val newListShips: List[Ship] = tempShip :: this.ships
+                val newPlayer: HumanPlayer = HumanPlayer(this.name, newListShips, newGrid)
+                val newTypeShips: List[TypeShip] = typeShips.tail
+                newPlayer.createShips(newTypeShips, f1, f2, f3)
+            } else {
+                Display.show("Your ship is not well positioned on the grid. Please try again.\n")
+                this.createShips(typeShips, f1, f2, f3)
             }
         }
     }
@@ -51,9 +51,9 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
             val player: HumanPlayer = HumanPlayer(namePlayer)
 
             player.createShips(Config.TYPESHIP,
-                () => Helper.chooseLetter(Config.TEXT_POSITIONING_SHIP),
-                () => Helper.chooseNumber(Config.TEXT_POSITIONING_SHIP),
-                () => Helper.chooseDirection())
+                () => Input.chooseLetter(Config.TEXT_POSITIONING_SHIP),
+                () => Input.chooseNumber(Config.TEXT_POSITIONING_SHIP),
+                () => Input.chooseDirection())
         } else {
             Display.show("You must choose a name, maybe in a next version you will be in high scores !")
             this.updateInformation()
@@ -62,11 +62,11 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
 
     override def getInfoForShot(opponentPlayer: Player): Cell = {
         // User inputs for the shot
-        val letter = Helper.chooseLetter(Config.TEXT_SHOOT)
-        val number = Helper.chooseNumber(Config.TEXT_SHOOT)
+        val letter = Input.chooseLetter(Config.TEXT_SHOOT)
+        val number = Input.chooseNumber(Config.TEXT_SHOOT)
         Cell(letter, number, TypeCell.UNKNOWN)
     }
 
-    override def isHuman(): Boolean = true
+    override def isHuman: Boolean = true
 
 }

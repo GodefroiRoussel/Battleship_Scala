@@ -39,16 +39,16 @@ object Display {
           */
         def showCellGridShip(cell: Cell): Unit = {
             cell.typeCell match {
-                case TypeCell.WATER => Display.showSameLine(Console.BLUE+"□ "+Console.RESET)
+                case TypeCell.WATER => Display.showSameLine(Console.BLUE+"@ "+Console.RESET)
                 case TypeCell.TOUCHED => Display.showSameLine(Console.RED+"● "+Console.RESET)
                 case TypeCell.UNKNOWN => Display.showSameLine(Console.BLACK +"□ "+Console.RESET)
                 case TypeCell.OCCUPIED => Display.showSameLine(Console.WHITE+"ο "+Console.RESET)
             }
         }
 
-        Display.show("   A B C D E F G H I J")
+        show("   A B C D E F G H I J")
         showGridTR(0, 0, grid, showCellGridShip)
-        Display.show("")
+        show("")
     }
 
     /**
@@ -86,15 +86,15 @@ object Display {
           */
         def showCellGridShot(cell: Cell): Unit = {
             cell.typeCell match {
-                case TypeCell.WATER => Display.showSameLine(Console.BLUE+"□ "+Console.RESET)
+                case TypeCell.WATER => Display.showSameLine(Console.BLUE+"@ "+Console.RESET)
                 case TypeCell.TOUCHED => Display.showSameLine(Console.RED+"● "+Console.RESET)
                 case TypeCell.UNKNOWN | TypeCell.OCCUPIED => Display.showSameLine(Console.BLACK +"□ "+Console.RESET)
             }
         }
 
-        Display.show("   A B C D E F G H I J")
+        show("   A B C D E F G H I J")
         showGridTR(0, 0, grid, showCellGridShot)
-        Display.show("")
+        show("")
     }
 
 }

@@ -1,6 +1,5 @@
 package Battleship
 
-import Battleship._
 import Helpers._
 
 import scala.util.Random
@@ -14,8 +13,9 @@ case class GameState(player1: Player, player2: Player)
 
 object Game extends App {
 
+    Display.clearPage()
     val r = new Random
-    Display.show("Hello, you are now in the battleship application!")
+    Display.show("Hello, you are now in the battleship application!\n")
 
     main(r)
 
@@ -25,20 +25,20 @@ object Game extends App {
       * @param r: Random
       */
     def main(r: Random) : Unit = {
-        val mode = Helper.chooseMode()
+        val mode = Input.chooseMode()
         mode match {
             case "1" =>
                 val player1Empty: Player = HumanPlayer("1")
 
                 // Choose play mode
-                val opponent = Helper.chooseOpponent()
+                val opponent = Input.chooseOpponent()
                 val player2Empty: Player = opponent match {
                     case "1" =>
                         // Case Human
                         HumanPlayer("2")
                     case _ =>
                         // Case AI
-                        val level = Helper.chooseLevel()
+                        val level = Input.chooseLevel()
                         level match {
                             case "1" =>
                                 AIEasyPlayer(random = r)
@@ -49,15 +49,21 @@ object Game extends App {
                         }
                 }
 
+
+                val gameStateBeforeRandom: GameState = initiateGame(player1Empty, player2Empty)
+
                 // Random player beginning the game
                 val gameState: GameState = r.nextInt(2) match {
-                    case 0 => initiateGame(player1Empty, player2Empty)
-                    case _ => initiateGame(player2Empty, player1Empty)
+                    case 0 => gameStateBeforeRandom
+                    case _ => GameState(gameStateBeforeRandom.player2, gameStateBeforeRandom.player1)
                 }
 
                 // Play the game and keep the winner
                 val winner: Player = playGame(gameState)
+                Thread.sleep(1000)
+                Display.clearPage()
                 Display.show(s"The winner is ${winner.name} ! Congratulations !")
+
             case "2" =>
                 val creatingEasyAI: Player = AIEasyPlayer(random = r)
                 val easyAI: Player = creatingEasyAI.updateInformation()
@@ -98,7 +104,9 @@ object Game extends App {
       * @return the game state to begin the game
       */
     def initiateGame(player1Empty: Player, player2Empty: Player): GameState = {
+        Display.clearPage()
         val player1: Player = player1Empty.updateInformation()
+        Display.clearPage()
         val player2: Player = player2Empty.updateInformation()
 
         GameState(player1, player2)
@@ -154,7 +162,7 @@ object Game extends App {
       * @return the new game state at the end of the turn (after the shot)
       */
     def playTurn(gameState: GameState): GameState = {
-        if (gameState.player1.isHuman()){
+        if (gameState.player1.isHuman){
             Thread.sleep(1000)
             Display.clearPage()
             Display.show(s"It's the turn of ${gameState.player1.name}.")

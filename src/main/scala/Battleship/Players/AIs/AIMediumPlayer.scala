@@ -5,7 +5,7 @@ import Battleship._
 
 import scala.util.Random
 
-case class AIMediumPlayer(name: String = "Medium", ships: List[Ship] = List(), grid: Grid = Grid.createGrid(), random: Random = new Random) extends AI {
+case class AIMediumPlayer(name: String = "Medium AI", ships: List[Ship] = List(), grid: Grid = Grid.createGrid(), random: Random = new Random) extends AI {
 
     override def createShips(typeShips: List[TypeShip], f1:() => Int, f2:() => Int, f3:() => Int): Player = {
         if (typeShips.isEmpty) {
@@ -20,15 +20,14 @@ case class AIMediumPlayer(name: String = "Medium", ships: List[Ship] = List(), g
             val tempShip : Ship = Ship.createShip(firstTypeShip, cell, direction)
 
             //Check if the ship is overlapping another ship or outside the board
-            this.grid.checkPosition(tempShip) match {
-                case true =>
-                    val newGrid: Grid = this.grid.placeShip(tempShip)
-                    val newListShips: List[Ship] = tempShip :: this.ships
-                    val newPlayer: AI = AIMediumPlayer(this.name, newListShips, newGrid, this.random)
-                    val newTypeShips: List[TypeShip] = typeShips.tail
-                    newPlayer.createShips(newTypeShips, f1, f2, f3)
-                case false =>
-                    this.createShips(typeShips, f1, f2, f3)
+            if (this.grid.checkPosition(tempShip)) {
+                val newGrid: Grid = this.grid.placeShip(tempShip)
+                val newListShips: List[Ship] = tempShip :: this.ships
+                val newPlayer: AI = AIMediumPlayer(this.name, newListShips, newGrid, this.random)
+                val newTypeShips: List[TypeShip] = typeShips.tail
+                newPlayer.createShips(newTypeShips, f1, f2, f3)
+            } else {
+                this.createShips(typeShips, f1, f2, f3)
             }
         }
     }
@@ -41,6 +40,11 @@ case class AIMediumPlayer(name: String = "Medium", ships: List[Ship] = List(), g
         AIMediumPlayer(this.name, ships, grid, this.random)
     }
 
+    /**
+      * This function take a random player that has not been hit yet
+      * @param opponentPlayer: Player: the opponent player
+      * @return the cell to shoot
+      */
     override def getInfoForShot(opponentPlayer: Player): Cell = {
         val cell: Cell = Cell(this.random.nextInt(Config.GRID_SIZE), this.random.nextInt(Config.GRID_SIZE), TypeCell.UNKNOWN)
         if (opponentPlayer.grid.checkCell(cell) == TypeCell.TOUCHED || opponentPlayer.grid.checkCell(cell) == TypeCell.WATER){

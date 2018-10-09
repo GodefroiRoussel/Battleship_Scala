@@ -12,5 +12,5 @@ trait AI extends Player{
             () => random.nextInt(Config.NB_DIRECTION))
     }
 
-    override def isHuman(): Boolean = false
+    override def isHuman: Boolean = false
 }

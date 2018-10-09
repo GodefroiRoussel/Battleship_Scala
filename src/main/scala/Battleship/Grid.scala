@@ -5,7 +5,7 @@ import scala.annotation.tailrec
 /*
 Coordinate System
 
-	    0
+	    1
 	A   |------------> x that is represented from A to J
 		|
 		|
@@ -16,8 +16,8 @@ Coordinate System
 
 case class Grid(cells: List[List[Cell]] = List(List())) {
     /**
-      * Function checking a ship has good positions.
-      * That means, positions that are not collapsing a ship already on the grid or outside the grid.
+      * Function checking if a ship has good positions.
+      * That means, positions that are not overlapping a ship already on the grid or cells are not outside the grid.
       * @param tempShip: Ship: the ship to check
       * @return true if the ship has good positions, otherwise false
       */
@@ -36,7 +36,7 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
 
     /**
       * Function positioning the ship on the grid and returning the grid updated
-      * @param ship : Ship: the ship to position
+      * @param ship: Ship: the ship to position
       * @return the grid with the ship positioned
       */
     def placeShip(ship: Ship): Grid = {
@@ -100,7 +100,7 @@ case class Grid(cells: List[List[Cell]] = List(List())) {
 object Grid {
     /**
       * Function creating a Battleship.Grid initialising all cells
-      * @return grid initialisated
+      * @return grid initialised
       */
     def createGrid() : Grid = {
 
@@ -122,7 +122,7 @@ object Grid {
           * @param x : Int : It represents the row where create cells
           * @param y : Int : It represents the index of the column
           * @param cells: List[Cell]: Accumulate the creation of the column
-          * @return a column of cell initialisated : a list of cell
+          * @return a column of cell initialised : a list of cell
           */
         @tailrec
         def createColumn(x: Int, y: Int, cells: List[Cell]): List[Cell] = {

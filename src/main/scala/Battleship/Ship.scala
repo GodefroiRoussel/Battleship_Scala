@@ -29,7 +29,7 @@ case class Ship(typeShip: TypeShip, cells: List[Cell]) {
       * Function that says if a ship is sunk or not
       * @return true if the number of cells TOUCHED of the ship is equal to the size of the type ship
       */
-    def isSunk(): Boolean = {
+    def isSunk: Boolean = {
          this.numberCellsTouched() == this.typeShip.size
     }
 
@@ -45,8 +45,7 @@ object Ship {
       * @return a Ship created
       */
     def createShip(typeShip: TypeShip, cell: Cell, direction: Int) : Ship = {
-        val newTypeShip = typeShip.copy(size = typeShip.size-1)
-        val cells = createListCellsFor(typeShip, cell, direction, List(cell))
+        val cells: List[Cell] = createListCellsFor(typeShip, cell, direction, List(cell))
         Ship(typeShip, cells)
     }
 
@@ -62,8 +61,8 @@ object Ship {
         if (typeShip.size == 1)
             cells
         else {
-            val newTypeShip = typeShip.copy(size = typeShip.size-1)
-            val newCell = direction match {
+            val newTypeShip: TypeShip = typeShip.copy(size = typeShip.size-1)
+            val newCell: Cell = direction match {
                 case 1 => cell.copy(y = cell.y - 1)
                 case 2 => cell.copy(x = cell.x + 1)
                 case 3 => cell.copy(y = cell.y + 1)

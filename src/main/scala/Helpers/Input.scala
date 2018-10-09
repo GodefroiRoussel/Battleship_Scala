@@ -2,7 +2,7 @@ package Helpers
 
 import scala.io.StdIn
 
-object Helper {
+object Input {
 
     /**
       * Function asking to the user to enter a number to choose which mode to play and check if the user entered a correct parameter
