@@ -142,6 +142,10 @@ class AIHardPlayerTest extends FunSuite with DiagrammedAssertions {
         val secondCellToShot: Cell = gameStateSwap2.player1.getInfoForShot(gameStateSwap2.player2)
         val secondCellThatShouldBeShooted: Cell = Cell(9, 8, TypeCell.OCCUPIED)
         assert(secondCellToShot == secondCellThatShouldBeShooted)
+    }
 
+    test("Is an AI human ? "){
+        val hardAI: Player = AIHardPlayer()
+        assert(!hardAI.isHuman)
     }
 }

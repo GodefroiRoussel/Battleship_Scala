@@ -111,7 +111,7 @@ class ShipTest extends FunSuite with DiagrammedAssertions {
         val ship: Ship = Ship(typeShip, listCell)
         assert(!ship.isSunk)
 
-        val shipHitted: Ship = ship.hit(Cell(6,2,TypeCell.OCCUPIED))
-        assert(shipHitted.isSunk)
+        val shipHit: Ship = ship.hit(Cell(6,2,TypeCell.OCCUPIED))
+        assert(shipHit.isSunk)
     }
 }

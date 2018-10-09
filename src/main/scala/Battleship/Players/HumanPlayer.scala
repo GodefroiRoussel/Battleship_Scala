@@ -37,11 +37,11 @@ case class HumanPlayer(name: String = "", ships: List[Ship] = List(), grid: Grid
     }
 
     override def copyShips(newShips: List[Ship]): Player = {
-        HumanPlayer(this.name, ships = newShips, this.grid)
+        HumanPlayer(this.name, ships = newShips, this.grid, this.random)
     }
 
     override def copyShipsAndGrid(ships: List[Ship], grid: Grid): Player = {
-        HumanPlayer(this.name, ships, grid)
+        HumanPlayer(this.name, ships, grid, this.random)
     }
 
     override def updateInformation(): Player = {
